@@ -15,6 +15,8 @@
   * [FAQ - TODO]
 * LeetCode
   * [总结](pages/leetcode/summery.md)
+  * [1. 两数之和](pages/leetcode/1.md)
+  * [2. 两数相加](pages/leetcode/2.md)
   * [3. 无重复字符的最长子串](pages/leetcode/3.md)
   * [5. 最长回文子串](pages/leetcode/5.md)
   * [6. Z 字形变换](pages/leetcode/6.md)
