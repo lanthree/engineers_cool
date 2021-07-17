@@ -70,6 +70,9 @@
   * [67. 二进制求和](pages/leetcode/67.md)
   * [69. x 的平方根](pages/leetcode/69.md)
   * [70. 爬楼梯](pages/leetcode/70.md)
+  * [71. 简化路径](pages/leetcode/71.md)
+  * [73. 矩阵置零](pages/leetcode/73.md)
+  * [74. 搜索二维矩阵](pages/leetcode/74.md)
 * 开源软件学习 - TODO
 * 架构设计 - TODO
     * 名字服务 - TODO
@@ -85,4 +88,5 @@
 * 线性代数
   * [基本概念](pages/linear_algebra/basic_nations.md)
 * [Docsify工具](pages/tools.md)
+* [功能测试](pages/test.md)
 
