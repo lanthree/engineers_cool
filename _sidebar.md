@@ -16,7 +16,9 @@
     * [CAP - TODO]
     * [Paxos - TODO]
     * [Raft - TODO]
+    * [gossip - TODO]
     * [分布式锁 - TODO]
+    * ID生成器
   * [FAQ - TODO]
 * LeetCode
   * [总结](pages/leetcode/summery.md)
@@ -39,10 +41,14 @@
   * [54. 螺旋矩阵](pages/leetcode/54.md)
   * [55. 跳跃游戏](pages/leetcode/55.md)
   * [56. 区间合并](pages/leetcode/56.md)
+  * [57. 插入合并](pages/leetcode/57.md)
+  * [58. 最后一个单词的长度](pages/leetcode/58.md)
+  * [59. 螺旋矩阵 II](pages/leetcode/59.md)
 * 开源软件学习 - TODO
 * 架构设计 - TODO
     * 名字服务 - TODO
     * Redis vs Memcached - TODO
+    * 分布式文件系统
 * 线性代数
   * [基本概念](pages/linear_algebra/basic_nations.md)
 * [Docsify工具](pages/tools.md)
