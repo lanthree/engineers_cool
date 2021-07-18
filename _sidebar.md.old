@@ -1,6 +1,4 @@
 * [Engineers Cool](README.md)
-* 线性代数
-  * [# 向量空间](pages/线性代数/basic_nations.md)
 * 其他
   * [Docsify工具](pages/其他/tools.md)
   * [测试页面](pages/其他/test.md)
@@ -65,3 +63,5 @@
   * [73. 矩阵置零](pages/LeetCode/73.md)
   * [74. 搜索二维矩阵](pages/LeetCode/74.md)
   * [75. 颜色分类](pages/LeetCode/75.md)
+* 线性代数
+  * [# 向量空间](pages/线性代数/basic_nations.md)

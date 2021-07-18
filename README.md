@@ -1,1 +1,34 @@
 # Engineers Cool
+
+## 简介
+
+## 学习计划
+
++ [ING] LeetCode 序号前200的 简单、中等难度题目
++ [TODO] 分布式系统
+    + [TODO] MIT 6.824
+    + [TODO] Google三大论文
+    + [TODO] CAP
+    + [TODO] 布式文件系统
+    + [TODO] 一致性协议：Paxos Raft
+    + [TODO] gossip
+    + [TODO] 分布式锁
+    + [TODO] ID生成器
++ [TODO] 架构设计
+    1. 名字服务 - TODO
+    2. Redis vs Memcached - TODO
++ [TODO] 开源软件学习
++ [TODO] 八股文
+    1. [TODO] TCP/IP协议
+    2. [TODO] 数据结构与算法
+        1. 算法思想 - xxx
+        2. 数组 vs 链表
+        3. 树 - AVL B树 B+树 红黑树 线段树
+        4. 队列 栈
+        5. 堆 优先队列 
+        6. 高级数据结构
+    3. [TODO] 现代操作系统
+    4. [TODO] 数据库
+    5. [TODO] C/C\+\+
+    6. [TODO] 设计模式
+    7. [TODO] FAQ

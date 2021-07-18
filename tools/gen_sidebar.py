@@ -26,19 +26,15 @@ def output_to_file():
     with open("./_sidebar.gen.md", "w") as fw:
         for item in path_to_sidebars:
             if len(item) != 0:
-                fw.write(item)
-                fw.write("\n")
+                fw.write("* {}\n".format(item))
             for sidebar in path_to_sidebars[item]:
                 fw.write(sidebar)
 
 def cmpvalue(v1, v2):
     if v1 == v2:
-        # print("cmpvalue {} == {}, return 0".format(v1, v2))
         return 0
     if v1 < v2:
-        # print("cmpvalue {} < {}, return -1".format(v1, v2))
         return -1
-    # print("cmpvalue {} > {}, return 1".format(v1, v2))
     return 1
 
 def cmp(f1, f2):
@@ -59,8 +55,6 @@ def cmp(f1, f2):
 
 def get_filelist(scan_dir):
     for home, dirs, files in os.walk(scan_dir):
-        # print(home)
-
         # print("#### dir list ####")
         # for dir in dirs:
             # print(dir)
@@ -74,9 +68,7 @@ def get_filelist(scan_dir):
                 continue
             if filename in ignore_files:
                 continue
-            # print(filename)
             fullname = os.path.join(home, filename)
-            # print(fullname)
             f = open(fullname, mode='r')
             file_title = f.readline()[1:].strip()
             sidebar = "[{}]({})".format(file_title, fullname[len(scan_dir):])
