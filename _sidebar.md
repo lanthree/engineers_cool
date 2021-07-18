@@ -73,6 +73,7 @@
   * [71. 简化路径](pages/leetcode/71.md)
   * [73. 矩阵置零](pages/leetcode/73.md)
   * [74. 搜索二维矩阵](pages/leetcode/74.md)
+  * [75. 颜色分类](pages/leetcode/75.md)
 * 开源软件学习 - TODO
 * 架构设计 - TODO
     * 名字服务 - TODO
