@@ -67,8 +67,8 @@
   * [78. 子集](pages/LeetCode/78.md)
   * [79. 单词搜索](pages/LeetCode/79.md)
   * [80. 删除序有序数组中的重复项 II](pages/LeetCode/80.md)
+* Linear Algebra
+  * [基本符号](pages/Linear-Algebra/basic_nations.md)
 * Distributed System
   * Papers
     * [Raft](pages/Distributed-System/Papers/Raft.md)
-* Linear Algebra
-  * [基本符号](pages/Linear-Algebra/basic_nations.md)
