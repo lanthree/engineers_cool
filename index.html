@@ -8,9 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css">
-
-  <!--link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar-folder.min.css" /-->
   <link rel="stylesheet" href="//engineers.cool/static/sidebar.css" />
+  <!--link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.css"-->
 </head>
 <body>
   <div id="app"></div>
@@ -49,5 +48,29 @@
   <script src="https://cdn.jsdelivr.net/gh/h-hg/docsify-pseudocode/dist/docsify-pseudocode.min.js"></script>
 
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
+
+
+<script type="text/javascript">
+    (function () {
+        let style = document.createElement('style');
+        style.innerHTML = "div.utterances { margin-left:10% !important; }";
+        document.getElementsByTagName("head")[0].appendChild(style);
+        let utterances = document.createElement('script');
+        utterances.type = 'text/javascript';
+        utterances.async = true;
+        utterances.setAttribute('issue-term', 'pathname')
+        utterances.setAttribute('theme', 'github-light')
+        utterances.setAttribute('repo', 'lanthree/comments')
+        utterances.crossorigin = 'anonymous';
+        utterances.src = 'https://utteranc.es/client.js';
+        window.addEventListener('load', (event) => {
+            let content = document.getElementsByClassName("content")[0]
+            if (content != null) {
+                content.appendChild(utterances)
+            }
+        });
+    })();
+</script>
+
 </body>
 </html>

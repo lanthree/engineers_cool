@@ -1,10 +1,14 @@
 * [Engineers Cool](README.md)
-* [Engineers Cool](pages/test.md)
-* [常用工具](pages/tools.md)
-线性代数
-  * [# 向量空间](pages/线性代数/basic_nations.md)
-LeetCode
-  * [二分查找](pages/LeetCode/summery.md)
+* Distributed System
+  * Papers
+    * [Raft](pages/Distributed-System/Papers/Raft.md)
+* Others
+  * [Docsify工具](pages/Others/tools.md)
+  * [测试页面](pages/Others/test.md)
+* Linear Algebra
+  * [基本符号](pages/Linear-Algebra/basic_nations.md)
+* LeetCode
+  * [模式总结](pages/LeetCode/summery.md)
   * [1. 两数之和](pages/LeetCode/1.md)
   * [2. 两数相加](pages/LeetCode/2.md)
   * [3. 无重复字符的最长子串](pages/LeetCode/3.md)
@@ -64,3 +68,7 @@ LeetCode
   * [73. 矩阵置零](pages/LeetCode/73.md)
   * [74. 搜索二维矩阵](pages/LeetCode/74.md)
   * [75. 颜色分类](pages/LeetCode/75.md)
+  * [77. 组合](pages/LeetCode/77.md)
+  * [78. 子集](pages/LeetCode/78.md)
+  * [79. 单词搜索](pages/LeetCode/79.md)
+  * [80. 删除序有序数组中的重复项 II](pages/LeetCode/80.md)

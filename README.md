@@ -5,6 +5,7 @@
 ## 学习计划
 
 + [ING] LeetCode 序号前200的 简单、中等难度题目
+    + 2021.7完成，随后每天保持1～2题，至少一个中及以上
 + [TODO] 分布式系统
     + [TODO] MIT 6.824
     + [TODO] Google三大论文
@@ -14,10 +15,6 @@
     + [TODO] gossip
     + [TODO] 分布式锁
     + [TODO] ID生成器
-+ [TODO] 架构设计
-    1. 名字服务 - TODO
-    2. Redis vs Memcached - TODO
-+ [TODO] 开源软件学习
 + [TODO] 八股文
     1. [TODO] TCP/IP协议
     2. [TODO] 数据结构与算法
@@ -32,3 +29,7 @@
     5. [TODO] C/C\+\+
     6. [TODO] 设计模式
     7. [TODO] FAQ
++ [TODO] 开源软件学习
++ [TODO] 架构设计
+    1. 名字服务 - TODO
+    2. Redis vs Memcached - TODO
