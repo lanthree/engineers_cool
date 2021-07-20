@@ -1,12 +1,12 @@
 * [Engineers Cool](README.md)
-* Distributed System
-  * Papers
-    * [Raft](pages/Distributed-System/Papers/Raft.md)
+* Linear Algebra
+  * [基本符号](pages/Linear-Algebra/basic_nations.md)
 * Others
   * [Docsify工具](pages/Others/tools.md)
   * [测试页面](pages/Others/test.md)
-* Linear Algebra
-  * [基本符号](pages/Linear-Algebra/basic_nations.md)
+* Distributed System
+  * Papers
+    * [Raft](pages/Distributed-System/Papers/Raft.md)
 * LeetCode
   * [模式总结](pages/LeetCode/summery.md)
   * [1. 两数之和](pages/LeetCode/1.md)
@@ -72,3 +72,5 @@
   * [78. 子集](pages/LeetCode/78.md)
   * [79. 单词搜索](pages/LeetCode/79.md)
   * [80. 删除序有序数组中的重复项 II](pages/LeetCode/80.md)
+  * [81. 搜索旋转排序数组 II](pages/LeetCode/81.md)
+  * [82. 删除排序链表中的重复元素 II](pages/LeetCode/82.md)
