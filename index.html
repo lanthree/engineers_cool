@@ -25,28 +25,38 @@
         skin: 'default',
       },
       sidebarDisplayLevel: 0, // set sidebar display level
-  plugins: [
-    function(hook) {
-      var footer = [
-        '<hr/>',
-        '<div id="utterances"></div>',
-        '<br/>',
-        '<br/>',
-        '<br/>',
-        '<footer>',
-        '<span style="text-align: right;display:block;"><a href="://beian.miit.gov.cn/#/Integrate">粤ICP备2021050312号-1</a></span>',
-        '</footer>'
-      ].join('');
+      plugins: [
+        function(hook) {
+          var footer = [
+            '<hr/>',
+            '<div id="utterances"></div>',
+            '<br/>',
+            '<br/>',
+            '<br/>',
+            '<footer>',
+            '<span style="text-align: right;display:block;"><a href="://beian.miit.gov.cn/#/Integrate">粤ICP备2021050312号-1</a></span>',
+            '</footer>'
+          ].join('');
 
-      hook.afterEach(function(html) {
-        return html + footer;
-      });
+          hook.afterEach(function(html) {
+            return html + footer;
+          });
 
-      hook.doneEach(function() {
-        add_utterances();
-      });
-    }
-  ]
+          hook.doneEach(function() {
+            add_utterances();
+          });
+        }
+      ],
+      markdown: {
+        renderer: {
+          image: function(href, title, text) {
+            // 按照原来的渲染 img
+            var image_html = this.origin.image.apply(this, arguments)
+            // 用 figure 包一下图片，实现居中
+            return '<figure>' + image_html + '<figcaption>' + text + '</figcaption></figure>'
+          }
+        }
+      }
     }
   </script>
   <!-- Docsify v4 -->
@@ -72,26 +82,32 @@
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
 
 
-<script type="text/javascript">
+  <script type="text/javascript">
     var add_utterances = (function () {
-        let style = document.createElement('style');
-        style.innerHTML = "div.utterances { margin-left:0% !important; } .utterances-frame {border: 0px !important; }";
-        document.getElementsByTagName("head")[0].appendChild(style);
-        let utterances = document.createElement('script');
-        utterances.type = 'text/javascript';
-        utterances.async = true;
-        utterances.setAttribute('issue-term', 'title')
-        utterances.setAttribute('theme', 'boxy-light')
-        utterances.setAttribute('repo', 'lanthree/comments')
-        utterances.crossorigin = 'anonymous';
-        utterances.src = 'https://utteranc.es/client.js';
-        let div_pos = document.getElementById("utterances")
-        let footer  = document.getElementsByTagName("footer")[0]
-        if (div_pos != null && footer != null) {
-            div_pos.appendChild(utterances)
-        }
+      let style = document.createElement('style');
+      style.innerHTML = "div.utterances { margin-left:0% !important; } .utterances-frame {border: 0px !important; }";
+      document.getElementsByTagName("head")[0].appendChild(style);
+      let utterances = document.createElement('script');
+      utterances.type = 'text/javascript';
+      utterances.async = true;
+      utterances.setAttribute('issue-term', 'title')
+      utterances.setAttribute('theme', 'boxy-light')
+      utterances.setAttribute('repo', 'lanthree/comments')
+      utterances.crossorigin = 'anonymous';
+      utterances.src = 'https://utteranc.es/client.js';
+      let div_pos = document.getElementById("utterances")
+      let footer  = document.getElementsByTagName("footer")[0]
+      if (div_pos != null && footer != null) {
+        div_pos.appendChild(utterances)
+      }
     });
-</script>
+  </script>
+
+  <style>
+    figure {
+      text-align: center
+    }
+  </style>
 
 </body>
 </html>
