@@ -1,13 +1,7 @@
 * [Engineers Cool](README.md)
-* Linear Algebra
-  * [基本符号](pages/Linear-Algebra/basic_nations.md)
 * Others
   * [Docsify工具](pages/Others/tools.md)
   * [测试页面](pages/Others/test.md)
-* Distributed System
-  * Papers
-    * [MapReduce](pages/Distributed-System/Papers/MapReduce.md)
-    * [Raft](pages/Distributed-System/Papers/Raft.md)
 * LeetCode
   * [模式总结](pages/LeetCode/summery.md)
   * [1. 两数之和](pages/LeetCode/1.md)
@@ -80,3 +74,10 @@
   * [88. 合并两个有序数组](pages/LeetCode/88.md)
   * [89. 格雷编码](pages/LeetCode/89.md)
   * [90. 子集 II](pages/LeetCode/90.md)
+  * [91. 解码方法](pages/LeetCode/91.md)
+* Distributed System
+  * Papers
+    * [MapReduce](pages/Distributed-System/Papers/MapReduce.md)
+    * [Raft](pages/Distributed-System/Papers/Raft.md)
+* Linear Algebra
+  * [基本符号](pages/Linear-Algebra/basic_nations.md)
