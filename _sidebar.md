@@ -1,10 +1,4 @@
 * [Engineers Cool](README.md)
-* Linear Algebra
-  * [基本符号](pages/Linear-Algebra/basic_nations.md)
-* Distributed System
-  * Papers
-    * [MapReduce](pages/Distributed-System/Papers/MapReduce.md)
-    * [Raft](pages/Distributed-System/Papers/Raft.md)
 * LeetCode
   * [模式总结](pages/LeetCode/summery.md)
   * [1. 两数之和](pages/LeetCode/1.md)
@@ -82,6 +76,14 @@
   * [93. 复原 IP 地址](pages/LeetCode/93.md)
   * [94. 二叉树的中序遍历](pages/LeetCode/94.md)
   * [95. 不同的二叉搜索树 II](pages/LeetCode/95.md)
+* Distributed System
+  * MIT 6.824
+    * [LEC-1 介绍](pages/Distributed-System/MIT-6.824/l1.md)
+  * Papers
+    * [MapReduce](pages/Distributed-System/Papers/MapReduce.md)
+    * [Raft](pages/Distributed-System/Papers/Raft.md)
+* Linear Algebra
+  * [基本符号](pages/Linear-Algebra/basic_nations.md)
 * Others
   * [Docsify工具](pages/Others/tools.md)
   * [测试页面](pages/Others/test.md)
