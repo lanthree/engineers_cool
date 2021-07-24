@@ -1,4 +1,6 @@
 * [Engineers Cool](README.md)
+* Linear Algebra
+  * [基本符号](pages/Linear-Algebra/basic_nations.md)
 * Distributed System
   * Papers
     * [MapReduce](pages/Distributed-System/Papers/MapReduce.md)
@@ -76,8 +78,10 @@
   * [89. 格雷编码](pages/LeetCode/89.md)
   * [90. 子集 II](pages/LeetCode/90.md)
   * [91. 解码方法](pages/LeetCode/91.md)
+  * [92. 反转链表 II](pages/LeetCode/92.md)
+  * [93. 复原 IP 地址](pages/LeetCode/93.md)
+  * [94. 二叉树的中序遍历](pages/LeetCode/94.md)
+  * [95. 不同的二叉搜索树 II](pages/LeetCode/95.md)
 * Others
   * [Docsify工具](pages/Others/tools.md)
   * [测试页面](pages/Others/test.md)
-* Linear Algebra
-  * [基本符号](pages/Linear-Algebra/basic_nations.md)
