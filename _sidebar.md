@@ -1,4 +1,16 @@
 * [Engineers Cool](README.md)
+* Distributed System
+  * MIT 6.824
+    * [LEC-1 介绍](pages/Distributed-System/MIT-6.824/l1.md)
+    * [LEC-2 RPC和线程](pages/Distributed-System/MIT-6.824/l2.md)
+  * Papers
+    * [MapReduce](pages/Distributed-System/Papers/MapReduce.md)
+    * [The Google File System](pages/Distributed-System/Papers/GFS.md)
+* Linear Algebra
+  * [基本符号](pages/Linear-Algebra/basic_nations.md)
+* Others
+  * [Docsify工具](pages/Others/tools.md)
+  * [测试页面](pages/Others/test.md)
 * LeetCode
   * [模式总结](pages/LeetCode/summery.md)
   * [1. 两数之和](pages/LeetCode/1.md)
@@ -76,14 +88,12 @@
   * [93. 复原 IP 地址](pages/LeetCode/93.md)
   * [94. 二叉树的中序遍历](pages/LeetCode/94.md)
   * [95. 不同的二叉搜索树 II](pages/LeetCode/95.md)
-* Distributed System
-  * MIT 6.824
-    * [LEC-1 介绍](pages/Distributed-System/MIT-6.824/l1.md)
-  * Papers
-    * [MapReduce](pages/Distributed-System/Papers/MapReduce.md)
-    * [Raft](pages/Distributed-System/Papers/Raft.md)
-* Linear Algebra
-  * [基本符号](pages/Linear-Algebra/basic_nations.md)
-* Others
-  * [Docsify工具](pages/Others/tools.md)
-  * [测试页面](pages/Others/test.md)
+  * [96. 不同的二叉搜索树](pages/LeetCode/96.md)
+  * [97. 交错字符串](pages/LeetCode/97.md)
+  * [98. 验证二叉搜索树](pages/LeetCode/98.md)
+  * [99. 恢复二叉搜索树](pages/LeetCode/99.md)
+  * [100. 相同的树](pages/LeetCode/100.md)
+  * [101. 对称二叉树](pages/LeetCode/101.md)
+  * [102. 二叉树的层序遍历](pages/LeetCode/102.md)
+  * [279. 完全平方数](pages/LeetCode/279.md)
+  * [283. 移动零](pages/LeetCode/283.md)

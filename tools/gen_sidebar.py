@@ -59,20 +59,30 @@ def cmpvalue(v1, v2):
     return 1
 
 def cmp(f1, f2):
-    p1 = f1[:-4].rfind(".")
-    p2 = f2[:-4].rfind(".")
+    p1 = f1.find(".")
+    p2 = f2.find(".")
     # print("cmp {} ? {}, p1:{}, p2:{}".format(f1, f2, p1, p2))
 
     if p1 == p2 and p1 == -1:
+        # 都没找到 按字符比较
         return cmpvalue(f1, f2)
-    elif p1 == p2 and p1 != -1:
-        return cmpvalue(f1[1:p1], f2[1:p2])
-    elif p1 != p2 and p1 == -1:
-        return -1
-    elif p1 != p2 and p2 == -1:
-        return 1
-    else:
+
+    is_p1_num = False
+    if p1 != -1:
+        is_p1_num = f1[1:p1].isdigit()
+    is_p2_num = False
+    if p2 != -1:
+        is_p2_num = f2[1:p2].isdigit()
+
+    if is_p1_num and is_p2_num:
+        # 都找到了 按数字比较
         return cmpvalue(int(f1[1:p1]), int(f2[1:p2]))
+    elif is_p1_num:
+        return 1
+    elif is_p2_num:
+        return -1
+
+    return cmpvalue(f1, f2)
 
 def get_filelist(scan_dir):
     for home, dirs, files in os.walk(scan_dir):

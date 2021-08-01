@@ -4,11 +4,13 @@
 
 ## 学习计划
 
-+ [ING] LeetCode 序号前200的 简单、中等难度题目
-    + 2021.7完成，随后每天保持1～2题，至少一个中及以上
-+ [TODO] 分布式系统
-    + [TODO] MIT 6.824
-    + [TODO] Google三大论文
++ [DONE] LeetCode 序号前100的 简单、中等难度题目
+    + 2021.7完成，随后每天保持1～2题，至少一个中
++ [ING] 分布式系统
+    + [ING] MIT 6.824
+    + [ING] Google三大论文
+        + [MapReduce](https://engineers.cool/#/pages/Distributed-System/Papers/MapReduce)
+        + [ING][The Google File System](https://engineers.cool/#/pages/Distributed-System/Papers/GFS)
     + [TODO] CAP
     + [TODO] 布式文件系统
     + [TODO] 一致性协议：Paxos Raft
@@ -30,6 +32,7 @@
     6. [TODO] 设计模式
     7. [TODO] FAQ
 + [TODO] 开源软件学习
+    + level db
 + [TODO] 架构设计
     1. 名字服务 - TODO
     2. Redis vs Memcached - TODO
