@@ -9,6 +9,11 @@
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css">
   <link rel="stylesheet" href="//engineers.cool/static/sidebar.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+
   <!--link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.css"-->
 </head>
 <body>
@@ -32,9 +37,8 @@
             '<div id="utterances"></div>',
             '<br/>',
             '<br/>',
-            '<br/>',
             '<footer>',
-            '<span style="text-align: right;display:block;"><a href="://beian.miit.gov.cn/#/Integrate">粤ICP备2021050312号-1</a></span>',
+            '<span style="text-align: right;display:block;"><a href="https://beian.miit.gov.cn/#/Integrate">粤ICP备2021050312号-1</a></span>',
             '</footer>'
           ].join('');
 
@@ -81,6 +85,8 @@
 
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
 
+  <!--script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script-->
+
 
   <script type="text/javascript">
     var add_utterances = (function () {
@@ -106,6 +112,12 @@
   <style>
     figure {
       text-align: center
+    }
+    /*body {
+        font-family: 'Fira Code', monospace;
+    }*/
+    code {
+        font-family: 'Fira Code', monospace !important;
     }
   </style>
 

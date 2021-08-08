@@ -91,14 +91,21 @@ def get_filelist(scan_dir):
             # print(dir)
         # print("#### dir list ####")
 
-        ignore_files = set(("_sidebar.md", "_footer.md", "_sidebar.gen.md", "template.md"))
+        ignore_files = set(("_sidebar.md", "_footer.md", "_sidebar.gen.md", "template.md", "README.md"))
+        ignore_dirs = set(("Linear-Algebra", ""))
 
         sidebars = []
         for filename in files:
+
             if not filename.endswith(".md"):
                 continue
+
             if filename in ignore_files:
                 continue
+
+            if home.split("/")[-1] in ignore_dirs:
+                continue
+
             fullname = os.path.join(home, filename)
             f = open(fullname, mode='r')
             file_title = f.readline()[1:].strip()

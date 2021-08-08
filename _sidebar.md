@@ -1,6 +1,13 @@
-* [Engineers Cool](README.md)
-* Linear Algebra
-  * [基本符号](pages/Linear-Algebra/basic_nations.md)
+* Distributed System
+  * MIT 6.824
+    * [LEC-1 介绍](pages/Distributed-System/MIT-6.824/l1.md)
+    * [LEC-2 RPC和线程](pages/Distributed-System/MIT-6.824/l2.md)
+    * [LEC-3 GFS](pages/Distributed-System/MIT-6.824/l3.md)
+    * [LEC-4 Primary/Backup Replication](pages/Distributed-System/MIT-6.824/l4.md)
+  * Papers
+    * [MapReduce](pages/Distributed-System/Papers/MapReduce.md)
+    * [Raft](pages/Distributed-System/Papers/Raft.md)
+    * [The Google File System](pages/Distributed-System/Papers/GFS.md)
 * Others
   * [Docsify工具](pages/Others/tools.md)
   * [测试页面](pages/Others/test.md)
@@ -88,12 +95,13 @@
   * [100. 相同的树](pages/LeetCode/100.md)
   * [101. 对称二叉树](pages/LeetCode/101.md)
   * [102. 二叉树的层序遍历](pages/LeetCode/102.md)
+  * [234. 回文链表](pages/LeetCode/234.md)
+  * [236. 二叉树的最近公共祖先](pages/LeetCode/236.md)
+  * [237. 删除链表中的节点](pages/LeetCode/237.md)
+  * [238. 除自身以外数组的乘积](pages/LeetCode/238.md)
+  * [239. 滑动窗口最大值](pages/LeetCode/239.md)
+  * [240. 搜索二维矩阵 II](pages/LeetCode/240.md)
+  * [242. 有效的字母异位词](pages/LeetCode/242.md)
+  * [268. 丢失的数字](pages/LeetCode/268.md)
   * [279. 完全平方数](pages/LeetCode/279.md)
   * [283. 移动零](pages/LeetCode/283.md)
-* Distributed System
-  * Papers
-    * [MapReduce](pages/Distributed-System/Papers/MapReduce.md)
-    * [The Google File System](pages/Distributed-System/Papers/GFS.md)
-  * MIT 6.824
-    * [LEC-1 介绍](pages/Distributed-System/MIT-6.824/l1.md)
-    * [LEC-2 RPC和线程](pages/Distributed-System/MIT-6.824/l2.md)
