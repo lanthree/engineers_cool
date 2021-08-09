@@ -1,3 +1,6 @@
+* Others
+  * [Docsify工具](pages/Others/tools.md)
+  * [测试页面](pages/Others/test.md)
 * Distributed System
   * MIT 6.824
     * [LEC-1 介绍](pages/Distributed-System/MIT-6.824/l1.md)
@@ -8,9 +11,6 @@
     * [MapReduce](pages/Distributed-System/Papers/MapReduce.md)
     * [Raft](pages/Distributed-System/Papers/Raft.md)
     * [The Google File System](pages/Distributed-System/Papers/GFS.md)
-* Others
-  * [Docsify工具](pages/Others/tools.md)
-  * [测试页面](pages/Others/test.md)
 * LeetCode
   * [模式总结](pages/LeetCode/summery.md)
   * [1. 两数之和](pages/LeetCode/1.md)
@@ -95,6 +95,7 @@
   * [100. 相同的树](pages/LeetCode/100.md)
   * [101. 对称二叉树](pages/LeetCode/101.md)
   * [102. 二叉树的层序遍历](pages/LeetCode/102.md)
+  * [230. 二叉搜索树中第K小的元素](pages/LeetCode/230.md)
   * [234. 回文链表](pages/LeetCode/234.md)
   * [236. 二叉树的最近公共祖先](pages/LeetCode/236.md)
   * [237. 删除链表中的节点](pages/LeetCode/237.md)

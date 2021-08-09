@@ -78,4 +78,36 @@ Paxos的第二个问题是，它没有为实际实现提供良好的基础。其
 
 Raft是用于管理第2节中描述的日志副本的算法。图2以表格的总结了算法，以供参考，图3列举了算法的关键属性；这些图的元素会在接下来的章节展开讨论。
 
+![图2：共识算法Raft的总结（包括成员关系变更和日志压缩）。左上角框中的server行为被描述为一组独立且重复触发的规则。章节号（例如§5.2）表示这一特性将会在哪一节讨论。](https://engineers-cool-1251518258.cos.ap-chengdu.myqcloud.com/Raft_P2.png)
 
+![图3：Raft保证在任何时间每一个属性都是正确的。章节号表示这一属性在哪一节讨论。](https://engineers-cool-1251518258.cos.ap-chengdu.myqcloud.com/Raft_P3.png ':size=45%')
+
+Raft这么实现共识：首先选举出一个leader，然后给这个leader管理日志副本的完整责任。leader从client接收日志项，备份到其他server，并告诉其他server什么时候可以安全的应用日志项到它的状态机。有一个leader的设定，简化了日志副本的管理。例如，leader可以在不需要跟其他server交流的情况下独立决策新的日志项应该放在日志的哪个地方，而且数据也以一种简单的方式从leader流到其他服务器。leader可以故障，可一个与其他server断开连接，在这种情况下，会选举一个新leader。
+
+在leader方法中，Raft分解共识问题为三个相对独立的子问题，这些子问题将会在下面的子章节中讨论：
+
++ **leader选举**（leader election）：当现leader故障时，必须选举一个新leader（5.2节）。
++ **日志备份**（log replication）：leader必须接收client的日志项，并把他们备份到全部集群server，促使其他（server的）日志跟他的一样（5.3节）。
++ **安全**（safety）：Raft关键安全属性是图3中的状态机安全属性（State Machine Safety Property）：如果任意server已经对他的状态机应用了特定的日志项，那么没有其他server会在同样的日志index使用不同的命令（不同的日志项）。5.4节描述了Raft如何确保这一属性；解决方案包括一个在 5.2节描述的选举机制 的额外约束。
+
+在阐述完共识算法后，这一节讨论可用性的问题，和定时（timing）在系统中的作用。
+
+### 5.1 Raft基础
+
+一个Raft集群包含多台server：典型地是5台，这样系统能容忍任意两台故障。在任意给定的时间，每个server都处理下面三个状态中的一个：leader、follower、candidate。在正常的操作中，只会有一个leader，其他server都是follower。follower都是被动的：他们不自己执行请求，只会简单的响应leader和candidate的请求。leader处理所有client的请求（如果client联系到follower，follower会重定向请求到leader）。第三个状态，candidate（在5.2节描述），用于选举一个新的leader。图4展示了状态和他们的转换；下面会讨论这些转换。
+
+![图4：server状态。follower只响应其他server的请求。如果一个follower收不到任何请求，他就会变成candidate，开始选举。candidate如果接收到集群大多数server的投票，他就会成为新的leader。leader通常会一直运作到其故障。](https://engineers-cool-1251518258.cos.ap-chengdu.myqcloud.com/Raft_P4.png ':size=45%')
+
+![图5：时间被划分为term，每个term以选举开始。选举成功后，单leader管理集群，直到term结束。一些选举失败，在这些情况下term会以无leader结束。在不同的服务器上，可以在不同的时间观察term之间的转换。](https://engineers-cool-1251518258.cos.ap-chengdu.myqcloud.com/Raft_P5.png ':size=45%')
+
+如图5所示，Raft把时间划分为任意长度的term。term以连续的整型数字编号。每个term以选举开始，这时一个或多个candidate尝试成为leader（5.2节描述）。如果一个candidate赢得选举，它就会在term剩下的时间以leader的形式服务。在某些情况下，一次选举会造成投票分裂。在这种term中，会没有leader；很会会开始新term，开始新的选举。Raft确保在一个给定的term中最多只有一个leader。
+
+不同的server会在不同的时间观察到term之间的转变，在某些情况下，一个server也许不会观察到一次选举，甚至整个term周期。term就像一个Raft的逻辑时钟，让server能检测过时的信息，如陈旧的leader（stale leader）。每个server存储一个当前term编号，这个编号会随时间单调递增。当前term在server通信时交换；如果一个server的当前term小于其他server，那么他会更新它的当前term为更大的值。如果一个candidate或者leader发现它的term过期了，它会立即退回为follow状态。如果一个server收到了一个过期term编号的请求，它会拒绝这个请求。
+
+Raft的server交流使用RPC，基础的共识算法只需要两种类型的RPC。RequestVote RPC，由candidate在选举期间发出（5.2节），AppendEntries RPC由leader在备份日志项和提供心跳时发出（5.3节）。第7节为了在server间传送快照引入了第三种RPC。如果server没有一定的时间内接收到响应，就会重试RPC，另外server会并行使用RPC来最优化性能。
+
+### 5.2 leader选举
+
+Raft使用心跳机制来触发leader选举。当server启动时，先成为follower。只要server能从leader或者candidate接收到有效RPC，他就保持为follower状态。leader为了保持其权利会周期性发送心跳（不携带日志项的AppendEntries RPC）给所有foloower。如果一个follower在election timeout时间内都没有收到任何请求，他就会假设没有活着的leader，然后开始一轮选举来选择一个新的leader。
+
+要开始一轮选举，一个follower增加它当前的term编号，状态变更为candidate。
