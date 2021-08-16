@@ -1,23 +1,5 @@
-* Others
-  * [Docsify工具](pages/Others/tools.md)
-  * [测试页面](pages/Others/test.md)
-* Distributed System
-  * [CAP](pages/Distributed-System/CAP.md)
-  * MIT 6.824
-    * [LEC-1 介绍](pages/Distributed-System/MIT-6.824/l1.md)
-    * [LEC-2 RPC和线程](pages/Distributed-System/MIT-6.824/l2.md)
-    * [LEC-3 GFS](pages/Distributed-System/MIT-6.824/l3.md)
-    * [LEC-4 Primary/Backup Replication](pages/Distributed-System/MIT-6.824/l4.md)
-    * [LEC-5 Raft (1)](pages/Distributed-System/MIT-6.824/l5.md)
-    * [LEC-6 Raft (2)](pages/Distributed-System/MIT-6.824/l6.md)
-  * Papers
-    * [MapReduce](pages/Distributed-System/Papers/MapReduce.md)
-    * [Raft](pages/Distributed-System/Papers/Raft.md)
-    * [The Google File System](pages/Distributed-System/Papers/GFS.md)
 * LeetCode
   * [总结](pages/LeetCode/summery.md)
-  * 剑指Offer
-    * [剑指 Offer 54. 二叉搜索树的第k大节点](pages/LeetCode/剑指Offer/jz_54.md)
   * LeetCode
     * [1. 两数之和](pages/LeetCode/LeetCode/1.md)
     * [2. 两数相加](pages/LeetCode/LeetCode/2.md)
@@ -124,3 +106,26 @@
     * [300. 最长递增子序列](pages/LeetCode/LeetCode/300.md)
     * [470. 用 Rand7() 实现 Rand10()](pages/LeetCode/LeetCode/470.md)
     * [863. 二叉树中所有距离为 K 的结点](pages/LeetCode/LeetCode/863.md)
+  * 剑指Offer
+    * [剑指 Offer 54. 二叉搜索树的第k大节点](pages/LeetCode/剑指Offer/jz_54.md)
+* Stereotyped
+  * CPP
+    * [基础知识](pages/Stereotyped/CPP/basic.md)
+  * Data Structures & Algorithm
+    * [排序](pages/Stereotyped/Data-Structures-&-Algorithm/sort.md)
+* Others
+  * [Docsify工具](pages/Others/tools.md)
+  * [测试页面](pages/Others/test.md)
+* Distributed System
+  * [CAP](pages/Distributed-System/CAP.md)
+  * MIT 6.824
+    * [LEC-1 介绍](pages/Distributed-System/MIT-6.824/l1.md)
+    * [LEC-2 RPC和线程](pages/Distributed-System/MIT-6.824/l2.md)
+    * [LEC-3 GFS](pages/Distributed-System/MIT-6.824/l3.md)
+    * [LEC-4 Primary/Backup Replication](pages/Distributed-System/MIT-6.824/l4.md)
+    * [LEC-5 Raft (1)](pages/Distributed-System/MIT-6.824/l5.md)
+    * [LEC-6 Raft (2)](pages/Distributed-System/MIT-6.824/l6.md)
+  * Papers
+    * [MapReduce](pages/Distributed-System/Papers/MapReduce.md)
+    * [Raft](pages/Distributed-System/Papers/Raft.md)
+    * [The Google File System](pages/Distributed-System/Papers/GFS.md)
