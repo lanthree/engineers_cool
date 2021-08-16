@@ -8,11 +8,11 @@
     + [ING] 倒刷[高频算法题](https://zhuanlan.zhihu.com/p/386929820)
 + [ING] 分布式系统 **重点准备**
     + [ING] [MIT 6.824](https://pdos.csail.mit.edu/6.824/schedule.html)
-        + 进度LEC4/LEC21，LEC5准备中
+        + 进度 LEC6/LEC21, lab2 todo
     + [ING] 分布式论文
         + [Google三宝 - MapReduce](https://engineers.cool/#/pages/Distributed-System/Papers/MapReduce)
         + [Google三宝 - GFS](https://engineers.cool/#/pages/Distributed-System/Papers/GFS)
-        + [ING][Raft](https://engineers.cool/#/pages/Distributed-System/Papers/Raft)
+        + [Raft](https://engineers.cool/#/pages/Distributed-System/Papers/Raft)
     + [TODO] CAP
     + [TODO] 布式文件系统
     + [TODO] 一致性协议：Paxos Raft gossip
@@ -38,5 +38,5 @@
     + level db
 + [TODO] 架构设计
     1. Redis vs Memcached - TODO **重点准备**
-    2. 名字服务 - TODO
+    2. 名字服务/服务发现 - TODO
     3. mq 原理 **重点准备**
