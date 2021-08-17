@@ -8,7 +8,7 @@
     + [ING] 倒刷[高频算法题](https://zhuanlan.zhihu.com/p/386929820)
 + [ING] 分布式系统 **重点准备**
     + [ING] [MIT 6.824](https://pdos.csail.mit.edu/6.824/schedule.html)
-        + 进度 LEC6/LEC21, lab2 todo
+        + 进度 LEC6/LEC21, lab2 1/4
     + [ING] 分布式论文
         + [Google三宝 - MapReduce](https://engineers.cool/#/pages/Distributed-System/Papers/MapReduce)
         + [Google三宝 - GFS](https://engineers.cool/#/pages/Distributed-System/Papers/GFS)
@@ -21,12 +21,13 @@
 + [TODO] 八股文
     1. [TODO] TCP/IP协议
     2. [TODO] 数据结构与算法 **重点准备**
-        1. 算法思想 - xxx
-        2. 数组 vs 链表
-        3. 树 - AVL B树 B+树 红黑树 线段树
-        4. 队列 栈
-        5. 堆 优先队列 
-        6. 高级数据结构
+        1. 算法思想 NP完全性
+        2. [排序](https://engineers.cool/#/pages/Stereotyped/Data-Structures-&-Algorithm/sort)
+        3. 数组 vs 链表
+        4. 树 - AVL树 伸展树 [B树](https://engineers.cool/#/pages/Stereotyped/Data-Structures-&-Algorithm/btree) [B+树](https://engineers.cool/#/pages/Stereotyped/Data-Structures-&-Algorithm/b+tree) 红黑树 线段树
+        5. 队列 栈
+        6. 堆 优先队列 
+        7. 高级数据结构
     3. [TODO] 现代操作系统
     4. [TODO] 数据库
         + mysql原理（innodb、事务隔离级别、自增主键的好处） **重点准备**
