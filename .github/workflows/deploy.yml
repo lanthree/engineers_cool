@@ -1,12 +1,13 @@
 name: Deploy
 on: [push]
 jobs:
-  Job1:
+  生成目录并部署:
     runs-on: self-hosted
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - run: echo "该任务由 ${{ github.event_name }} 事件触发"
+      - run: echo "分支名： ${{ github.ref }} 仓库： ${{ github.repository }}."
       - name: Check out repository code
         uses: actions/checkout@v2
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "仓库： ${{ github.repository }} 已经在执行器内clone完成"
       - run: export WORKSPACE=${{ github.workspace }} ; sh tools/install.sh
+      - run: echo "更新完成！"
