@@ -1,5 +1,3 @@
-cd $WORKSPACE/engineers_cool
-
 python3 tools/gen_sidebar.py
 cat _sidebar.gen.md
 mv _sidebar.md _sidebar.md.old
