@@ -1,7 +1,7 @@
 name: Deploy
 on: [push]
 jobs:
-  生成目录并部署:
+  install_engineers_cool_page:
     runs-on: self-hosted
     steps:
       - run: echo "该任务由 ${{ github.event_name }} 事件触发"
