@@ -120,6 +120,6 @@ def get_filelist(scan_dir):
         output_sidebars(home, sidebars)
 
 if __name__ == "__main__":
-    print(os.getenv('key_name'))
+    print(os.getenv('WORKSPACE'))
     # get_filelist("/home/ubuntu/work/engineers_cool/")
     # output_to_file();
