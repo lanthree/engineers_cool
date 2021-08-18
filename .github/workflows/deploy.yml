@@ -12,5 +12,5 @@ jobs:
       - name: List files in the repository
         run: |
           tree ${{ github.workspace }}
-      - run: pwd
-
+      - run: export WORKSPACE=${{ github.workspace }}
+      - run: sh ./tools/gen_sidebar.py
