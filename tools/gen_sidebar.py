@@ -31,7 +31,7 @@ class Node:
 sidebars_tree = Node("")
 def output_sidebars(scan_dir, path, sidebars):
     global sidebars_tree
-    relative_path = path[len(scan_dir):]
+    relative_path = path[len(scan_dir)+len('/pages/'):]
     sidebars_tree.add_pages(relative_path.split("/"), 0, sidebars)
 
 def DFS(node, level, fw):
