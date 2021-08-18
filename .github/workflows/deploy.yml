@@ -9,4 +9,4 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: export WORKSPACE=${{ github.workspace }} ; python3 tools/gen_sidebar.py
+      - run: export WORKSPACE=${{ github.workspace }} ; sh tools/install.sh
