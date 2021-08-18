@@ -29,9 +29,9 @@ class Node:
         self.internal_children_[s_p[idx]].add_pages(s_p, idx+1, pages)
 
 sidebars_tree = Node("")
-def output_sidebars(path, sidebars):
+def output_sidebars(scan_dir, path, sidebars):
     global sidebars_tree
-    relative_path = path[39:]
+    relative_path = path[len(scan_dir):]
     sidebars_tree.add_pages(relative_path.split("/"), 0, sidebars)
 
 def DFS(node, level, fw):
@@ -117,8 +117,9 @@ def get_filelist(scan_dir):
         if len(sidebars) == 0:
             continue
         # print("sidebars: ", sidebars)
-        output_sidebars(home, sidebars)
+        output_sidebars(scan_dir, home, sidebars)
 
 if __name__ == "__main__":
-    get_filelist(os.getenv('WORKSPACE'))
+    get_filelist(os.getenv('WORKSPACE')+'/pages')
     output_to_file();
+    
