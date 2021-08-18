@@ -120,6 +120,6 @@ def get_filelist(scan_dir):
         output_sidebars(scan_dir, home, sidebars)
 
 if __name__ == "__main__":
-    get_filelist(os.getenv('WORKSPACE')+'/pages')
+    get_filelist(os.getenv('WORKSPACE'))
     output_to_file();
     
