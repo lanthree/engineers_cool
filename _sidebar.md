@@ -1,6 +1,9 @@
 * Architecture
   * Redis
     * [1. Redis中的数据结构](pages/Architecture/Redis/data_structure.md)
+* Others
+  * [# Docsify工具](pages/Others/tools.md)
+  * [测试页面](pages/Others/test.md)
 * Stereotyped
   * CPP
     * [基础知识](pages/Stereotyped/CPP/basic.md)
@@ -8,6 +11,20 @@
     * [B+树](pages/Stereotyped/Data-Structures-&-Algorithm/b+tree.md)
     * [B树](pages/Stereotyped/Data-Structures-&-Algorithm/btree.md)
     * [排序](pages/Stereotyped/Data-Structures-&-Algorithm/sort.md)
+    * [跳表](pages/Stereotyped/Data-Structures-&-Algorithm/skip_list.md)
+* Distributed System
+  * [CAP](pages/Distributed-System/CAP.md)
+  * MIT 6.824
+    * [LEC-1 介绍](pages/Distributed-System/MIT-6.824/l1.md)
+    * [LEC-2 RPC和线程](pages/Distributed-System/MIT-6.824/l2.md)
+    * [LEC-3 GFS](pages/Distributed-System/MIT-6.824/l3.md)
+    * [LEC-4 Primary/Backup Replication](pages/Distributed-System/MIT-6.824/l4.md)
+    * [LEC-5 Raft (1)](pages/Distributed-System/MIT-6.824/l5.md)
+    * [LEC-6 Raft (2)](pages/Distributed-System/MIT-6.824/l6.md)
+  * Papers
+    * [MapReduce](pages/Distributed-System/Papers/MapReduce.md)
+    * [Raft](pages/Distributed-System/Papers/Raft.md)
+    * [The Google File System](pages/Distributed-System/Papers/GFS.md)
 * LeetCode
   * [总结](pages/LeetCode/summery.md)
   * 剑指Offer
@@ -98,6 +115,7 @@
     * [112. 路径总和](pages/LeetCode/LeetCode/112.md)
     * [146. LRU 缓存机制](pages/LeetCode/LeetCode/146.md)
     * [153. 寻找旋转排序数组中的最小值](pages/LeetCode/LeetCode/153.md)
+    * [202. 快乐数](pages/LeetCode/LeetCode/202.md)
     * [204. 计数质数](pages/LeetCode/LeetCode/204.md)
     * [206. 反转链表](pages/LeetCode/LeetCode/206.md)
     * [208. 实现 Trie (前缀树)](pages/LeetCode/LeetCode/208.md)
@@ -119,19 +137,3 @@
     * [300. 最长递增子序列](pages/LeetCode/LeetCode/300.md)
     * [470. 用 Rand7() 实现 Rand10()](pages/LeetCode/LeetCode/470.md)
     * [863. 二叉树中所有距离为 K 的结点](pages/LeetCode/LeetCode/863.md)
-* Distributed System
-  * [CAP](pages/Distributed-System/CAP.md)
-  * MIT 6.824
-    * [LEC-1 介绍](pages/Distributed-System/MIT-6.824/l1.md)
-    * [LEC-2 RPC和线程](pages/Distributed-System/MIT-6.824/l2.md)
-    * [LEC-3 GFS](pages/Distributed-System/MIT-6.824/l3.md)
-    * [LEC-4 Primary/Backup Replication](pages/Distributed-System/MIT-6.824/l4.md)
-    * [LEC-5 Raft (1)](pages/Distributed-System/MIT-6.824/l5.md)
-    * [LEC-6 Raft (2)](pages/Distributed-System/MIT-6.824/l6.md)
-  * Papers
-    * [MapReduce](pages/Distributed-System/Papers/MapReduce.md)
-    * [Raft](pages/Distributed-System/Papers/Raft.md)
-    * [The Google File System](pages/Distributed-System/Papers/GFS.md)
-* Others
-  * [Docsify工具](pages/Others/tools.md)
-  * [测试页面](pages/Others/test.md)
