@@ -25,9 +25,8 @@
         2. [排序](https://engineers.cool/#/pages/Stereotyped/Data-Structures-&-Algorithm/sort)
         3. 数组 链表 [跳表](https://engineers.cool/#/pages/Stereotyped/Data-Structures-&-Algorithm/skip_list)
         4. 树 - AVL树 伸展树 [B树](https://engineers.cool/#/pages/Stereotyped/Data-Structures-&-Algorithm/btree) [B+树](https://engineers.cool/#/pages/Stereotyped/Data-Structures-&-Algorithm/b+tree) 红黑树 线段树
-        5. 队列 栈
+        5. 队列 栈 二项队列
         6. 堆 优先队列 
-        7. 高级数据结构
     3. [TODO] 现代操作系统
     4. [TODO] 数据库
         + mysql原理（innodb、事务隔离级别、自增主键的好处） **重点准备**
