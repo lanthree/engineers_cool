@@ -24,7 +24,7 @@
         1. 算法思想 NP完全性
         2. [排序](https://engineers.cool/#/pages/Stereotyped/Data-Structures-&-Algorithm/sort)
         3. 数组 链表 [跳表](https://engineers.cool/#/pages/Stereotyped/Data-Structures-&-Algorithm/skip_list)
-        4. 树 - AVL树 伸展树 [B树](https://engineers.cool/#/pages/Stereotyped/Data-Structures-&-Algorithm/btree) [B+树](https://engineers.cool/#/pages/Stereotyped/Data-Structures-&-Algorithm/b+tree) 红黑树 线段树
+        4. 树 - AVL树 伸展树 [B树](https://engineers.cool/#/pages/Stereotyped/Data-Structures-&-Algorithm/btree) [B+树](https://engineers.cool/#/pages/Stereotyped/Data-Structures-&-Algorithm/b+tree) [红黑树](https://engineers.cool/#/pages/Stereotyped/Data-Structures-&-Algorithm/rbtree) 线段树
         5. 队列 栈 二项队列
         6. 堆 优先队列 
     3. [TODO] 现代操作系统
