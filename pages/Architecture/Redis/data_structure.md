@@ -32,6 +32,40 @@ hash表中每个桶中的元素（entry）保存了`*key`和`*value`，分别指
 
 ### 简单动态字符串
 
+先看它的结构：
+
+```cpp
+struct __attribute__ ((__packed__)) sdshdr32 {
+    uint32_t len;   /* 已使用的长度 */
+    uint32_t alloc; /* buf总可用（包括已使用）长度；不包括sdshdr结构体的大小，以及buf结尾'\0'占用的1字节 */
+    unsigned char flags; /* 前3bits表示类型, 后5bits未使用 */
+    char buf[];
+};
+```
+
+为了更高效的（减少浪费）使用内存，`sdshdr`有不同的类型（用flag标识）：`sdshdr8`、`sdshdr16`、`sdshdr32`、`sdshdr64`（在生成新字符串时，可以动态的根据字符串长度，生成不同类型的结构）。不同的类型，其`len`、`alloc`的数据类型不同，例如`sdshdr16`对应`uint16_t`。节省hdr结构空间的同时，约束了buf的最大长度。另外，sds提供的API中，buf结构是二进制安全的，不会因为数组中有'\0'而被截断（使用len判断长度）。但是如果用于打印，那就不保证不被截断了。
+
+在代码中，上面结构只是sds的**头**的定义，sbs本身被定义为`typedef char *sds;`，相当于在代码中，`sdshdr`结构中的`buf`作为sds传递，sds的API为了适配（或者说 是sds为了适配API？），会通过数组下标`-1`取到`flags`，再操作：
+
+```cpp
+static inline size_t sdslen(const sds s) {
+    unsigned char flags = s[-1];
+    switch(flags&SDS_TYPE_MASK) {
+        case SDS_TYPE_5:
+            return SDS_TYPE_5_LEN(flags);
+        case SDS_TYPE_8:
+            return SDS_HDR(8,s)->len;
+        case SDS_TYPE_16:
+            return SDS_HDR(16,s)->len;
+        case SDS_TYPE_32:
+            return SDS_HDR(32,s)->len;
+        case SDS_TYPE_64:
+            return SDS_HDR(64,s)->len;
+    }
+    return 0;
+}
+```
+
 ### 双向链表
 
 ### 压缩列表
@@ -57,3 +91,4 @@ hash表中每个桶中的元素（entry）保存了`*key`和`*value`，分别指
 
 1. 极客时间，《Redis核心技术与实战》
 2. [An introduction to Redis data types and abstractions](https://redis.io/topics/data-types-intro)
+3. [Redis代码](https://redis.io/download)
