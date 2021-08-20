@@ -93,7 +93,7 @@
 
 对于情况2，我们可以通过某种方法，把该问题转换为情况1：以S为支点，把 SR红 / SL红（镜像问题）旋转为S的新父，并交换着色。
 
-![](https://engineers-cool-1251518258.cos.ap-chengdu.myqcloud.com/rbtree_delete_snotallb_2.svg))
+![](https://engineers-cool-1251518258.cos.ap-chengdu.myqcloud.com/rbtree_delete_snotallb_2.svg)
 
 #### S为红色
 
