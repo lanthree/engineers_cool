@@ -79,7 +79,7 @@
 1. P为黑：此时可以通过S着红色，来达到**操作1**，然后以P为新的需平衡结点，向上递归处理。
 2. P为红：此时可以通过交换P、S的着色（P：红->黑；S：黑->红），来达到**操作2**，完成平衡。
 
-![](https://engineers-cool-1251518258.cos.ap-chengdu.myqcloud.com/rbtree_delete_sb.svg))
+![](https://engineers-cool-1251518258.cos.ap-chengdu.myqcloud.com/rbtree_delete_sb.svg)
 
 再考虑，S的子结点不全黑：
 1. S为左子，SL红；S为右子，SR红（镜像问题）
