@@ -42,4 +42,5 @@
     1. Redis vs Memcached - TODO **重点准备**
     2. 名字服务/服务发现 - TODO
     3. mq 原理 **重点准备**
-    4. UML：类图
+    4. chubby / zookeeper
+    5. UML：类图
