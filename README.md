@@ -29,7 +29,7 @@
         5. 散列
         6. 图论：最小生成树、[拓扑排序](https://engineers.cool/#/pages/Stereotyped/Data-Structures-&-Algorithm/graph/tp_sort) 、最短路径
     3. [TODO] 现代操作系统
-        + 锁、段页
+        + Unix环境编程-锁、段页
     4. [TODO] 数据库
         + mysql原理（innodb、事务隔离级别、自增主键的好处、锁） **重点准备**
         + LSM-tree Bitcask
