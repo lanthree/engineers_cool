@@ -19,7 +19,7 @@
     + [TODO] ID生成器
 + [TODO] 八股文
     1. [TODO] TCP/IP协议
-        1. [协议栈 TPC握手/挥手/状态转移](https://engineers.cool/#/pages/Stereotyped/net/cheatsheet?id=tcp)
+        1. [协议栈 TPC握手/挥手/状态转移](https://engineers.cool/#/pages/Stereotyped/Net/cheatsheet?id=tcp)
         2. 常见问题准备
     2. [TODO] 数据结构与算法 **重点准备**
         1. 算法思想 NP完全性
