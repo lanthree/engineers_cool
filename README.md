@@ -33,7 +33,7 @@
     4. [TODO] 数据库
         + mysql原理（innodb、[事务隔离级别](https://engineers.cool/#/pages/Stereotyped/DataBase/transaction)、自增主键的好处、[锁](https://engineers.cool/#/pages/Stereotyped/DataBase/lock)） **重点准备**
         + LSM-tree Bitcask
-    5. [TODO] C/C\+\+
+    5. [TODO] [C/C\+\+](https://engineers.cool/#/pages/Stereotyped/Language/cpp)
     6. [TODO] 设计模式
     7. [TODO] FAQ
 + [TODO] 开源软件学习
