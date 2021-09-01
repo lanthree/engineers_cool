@@ -1,125 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>学习笔记</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="Description">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css">
-  <link rel="stylesheet" href="//engineers.cool/static/sidebar.css" />
+    <meta charset="UTF-8">
+    <title>学习笔记</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="description" content="Description">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css">
+    <link rel="stylesheet" href="//engineers.cool/static/sidebar.css" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
 
-  <!--link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.css"-->
+    <!--link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.css"-->
 </head>
+
 <body>
-  <div id="app"></div>
-  <script>
-    window.$docsify = {
-      name: 'Note',
-      // logo: '/static/icon.svg',
-      repo: '',
-      loadSidebar: true,
-      subMaxLevel: 3,
-      // loadFooter: '_footer.md',
-      plantuml: {
-        skin: 'default',
-      },
-      sidebarDisplayLevel: 0, // set sidebar display level
-      plugins: [
-        function(hook) {
-          var footer = [
-            '<hr/>',
-            '<div id="utterances"></div>',
-            '<br/>',
-            '<br/>',
-            '<footer>',
-            '<span style="text-align: right;display:block;"><a href="https://beian.miit.gov.cn/#/Integrate">粤ICP备2021050312号-1</a></span>',
-            '</footer>'
-          ].join('');
+    <div id="app"></div>
+    <script>
+        window.$docsify = {
+            name: 'Note',
+            // logo: '/static/icon.svg',
+            repo: '',
+            loadSidebar: true,
+            subMaxLevel: 3,
+            // loadFooter: '_footer.md',
+            plantuml: {
+                skin: 'default',
+            },
+            sidebarDisplayLevel: 0, // set sidebar display level
+            plugins: [
+                function(hook) {
+                    var footer = [
+                        '<hr/>',
+                        '<div id="utterances"></div>',
+                        '<br/>',
+                        '<br/>',
+                        '<footer>',
+                        '<span style="text-align: right;display:block;"><a href="https://beian.miit.gov.cn/#/Integrate">粤ICP备2021050312号-1</a></span>',
+                        '</footer>'
+                    ].join('');
 
-          hook.afterEach(function(html) {
-            return html + footer;
-          });
+                    hook.afterEach(function(html) {
+                        return html + footer;
+                    });
 
-          hook.doneEach(function() {
-            add_utterances();
-          });
+                    hook.doneEach(function() {
+                        add_utterances();
+                    });
+                }
+            ],
+            markdown: {
+                renderer: {
+                    image: function(href, title, text) {
+                        // 按照原来的渲染 img
+                        var image_html = this.origin.image.apply(this, arguments)
+                            // 用 figure 包一下图片，实现居中
+                        return '<figure>' + image_html + '<figcaption>' + text + '</figcaption></figure>'
+                    }
+                }
+            }
         }
-      ],
-      markdown: {
-        renderer: {
-          image: function(href, title, text) {
-            // 按照原来的渲染 img
-            var image_html = this.origin.image.apply(this, arguments)
-            // 用 figure 包一下图片，实现居中
-            return '<figure>' + image_html + '<figcaption>' + text + '</figcaption></figure>'
-          }
+    </script>
+    <!-- Docsify v4 -->
+    <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
+
+    <script src="//unpkg.com/prismjs/components/prism-bash.min.js"></script>
+    <script src="//unpkg.com/prismjs/components/prism-c.min.js"></script>
+    <script src="//unpkg.com/prismjs/components/prism-cpp.min.js"></script>
+    <script src="//unpkg.com/prismjs/components/prism-python.min.js"></script>
+    <script src="//unpkg.com/prismjs/components/prism-go.min.js"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/@alertbox/docsify-footer/dist/docsify-footer.min.js"></script>
+    <script src="//unpkg.com/docsify-plantuml/dist/docsify-plantuml.min.js"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/docsify-katex@latest/dist/docsify-katex.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+    <!--script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/h-hg/docsify-pseudocode/dist/docsify-pseudocode.min.js"></script-->
+
+    <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
+
+    <!--script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script-->
+
+
+    <script type="text/javascript">
+        var add_utterances = (function() {
+            let style = document.createElement('style');
+            style.innerHTML = "div.utterances { margin-left:0% !important; } .utterances-frame {border: 0px !important; }";
+            document.getElementsByTagName("head")[0].appendChild(style);
+            let utterances = document.createElement('script');
+            utterances.type = 'text/javascript';
+            utterances.async = true;
+            utterances.setAttribute('issue-term', 'title')
+            utterances.setAttribute('theme', 'boxy-light')
+            utterances.setAttribute('repo', 'lanthree/comments')
+            utterances.crossorigin = 'anonymous';
+            utterances.src = 'https://utteranc.es/client.js';
+            let div_pos = document.getElementById("utterances")
+            let footer = document.getElementsByTagName("footer")[0]
+            if (div_pos != null && footer != null) {
+                div_pos.appendChild(utterances)
+            }
+        });
+    </script>
+
+    <style>
+        figure {
+            text-align: center
         }
-      }
-    }
-  </script>
-  <!-- Docsify v4 -->
-  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
-
-  <script src="//unpkg.com/prismjs/components/prism-bash.min.js"></script>
-  <script src="//unpkg.com/prismjs/components/prism-c.min.js"></script>
-  <script src="//unpkg.com/prismjs/components/prism-cpp.min.js"></script>
-  <script src="//unpkg.com/prismjs/components/prism-python.min.js"></script>
-  <script src="//unpkg.com/prismjs/components/prism-go.min.js"></script>
-
-  <script src="//cdn.jsdelivr.net/npm/@alertbox/docsify-footer/dist/docsify-footer.min.js"></script>
-  <script src="//unpkg.com/docsify-plantuml/dist/docsify-plantuml.min.js"></script>
-
-  <script src="//cdn.jsdelivr.net/npm/docsify-katex@latest/dist/docsify-katex.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/h-hg/docsify-pseudocode/dist/docsify-pseudocode.min.js"></script>
-
-  <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
-
-  <!--script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script-->
-
-
-  <script type="text/javascript">
-    var add_utterances = (function () {
-      let style = document.createElement('style');
-      style.innerHTML = "div.utterances { margin-left:0% !important; } .utterances-frame {border: 0px !important; }";
-      document.getElementsByTagName("head")[0].appendChild(style);
-      let utterances = document.createElement('script');
-      utterances.type = 'text/javascript';
-      utterances.async = true;
-      utterances.setAttribute('issue-term', 'title')
-      utterances.setAttribute('theme', 'boxy-light')
-      utterances.setAttribute('repo', 'lanthree/comments')
-      utterances.crossorigin = 'anonymous';
-      utterances.src = 'https://utteranc.es/client.js';
-      let div_pos = document.getElementById("utterances")
-      let footer  = document.getElementsByTagName("footer")[0]
-      if (div_pos != null && footer != null) {
-        div_pos.appendChild(utterances)
-      }
-    });
-  </script>
-
-  <style>
-    figure {
-      text-align: center
-    }
-    /*body {
+        /*body {
         font-family: 'Fira Code', monospace;
     }*/
-    code {
-        font-family: 'Fira Code', monospace !important;
-    }
-  </style>
+        
+        code {
+            font-family: 'Fira Code', monospace !important;
+        }
+    </style>
 
 </body>
+
 </html>
