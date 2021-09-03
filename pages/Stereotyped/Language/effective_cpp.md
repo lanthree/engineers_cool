@@ -668,3 +668,165 @@ C++的名称查找法则（name lookup rules）确保将找到global作用域或
 + 调用swap时应针对`std::swap`使用using声明式，然后调用swap并且不带任何“命名空间资格修饰”。
 + 为“用户定义类型”进行std templates全特化是好的，但千万不要尝试在std内加入某些对std而言全新的东西。
 
+## 条款26：尽可能延后变量定义式的出现时间
+
+只要你定一个变量而其类型带有一个构造函数或析构函数，那么当程序的控制流（control flow）到达这个变量时，你便得承受构造成本；当这个变量离开其作用域时，你便得承受析构成本。即使这个变量最终并未被使用。
+
+请记住：
++ 尽可能延后变量定义式的出现。这样做可增加程序的清晰度并改善程序效率。
+
+## 条款27：尽量少做转型动作
+
+C++规则的设计目标之一是，保证“类型错误”绝不可能发生。理论上如果你的程序很“干净的”通过编译，就表示它并不企图在任何对象身上执行任何不安全、无意义、愚蠢荒谬的操作。这是一个极具价值的保证。可别草率地放弃它。
+
+两种无差别的“旧式转型”形式：
+
+```cpp
+(T)expression // 将expression转型为T
+T(expression) // 将expression转型为T
+```
+
+C++还提供了四种新式转型（常常被称为new-style或C++ style casts）：
+
+```cpp
+const_cast<T>( expression )
+dynamic_cast<T>( expression )
+reinterpret_cast<T>( expression )
+static_cast<T>( expression )
+```
+
++ `const_cast`通常被用来将对象的常量性转除（cast away the constness）。它也是唯一有此能力的C++ style转型操作符。
++ `dynamic_cast`主要用来执行“安全向下转型”（saft downcasting），也就是用来决定某对象是否归属继承体系中的某个类型。它是唯一无法由旧式语法执行的动作，也是唯一可能耗费重大运行成本的转型动作。
++ `reinterpret_cast`意图执行低级转型，例如将 pinter to int转型为一个int。
++ `static_cast`用来强迫隐式转换（implicit conversions），例如将non-const转型为const（反过来只能用`const_cast`），将`void*`指针转换为`typed`指针，将pointer-to-base转换为pointer-to-derivied。
+
+除了对一般转型保持机敏与猜疑，更应该在注重效率的代码中对`dynamic_cast`保持机敏与猜疑。绝对必须避免的一件事是所谓的“连串（cascading）`dynamic_cast`”。
+
+请记住：
++ 如果可以，尽量避免转型，特别是在注重效率的代码中避免`dynamic_cast`。如果有个设计需要转型动作，试着发展无需转型的替代设计。
++ 如果转型是必要的，试着将它隐藏于某个函数背后。客户随后可以调用该函数，而不需要将转型放进他们自己的代码内。
++ 宁可使用C++ style（新式）转型，不要使用旧式转型。前者很容易辨识出来，而且也比较有着分门别类的职掌。
+
+## 条款28：避免返回handles指向对象内部成分
+
+请记住：
++ 避免返回handles（包括references、指针、迭代器）指向对象内部。准守这个条款可增加封装性，帮助const成员函数的行为更像个const，并将发生“虚吊号码牌”（dangling handles）的可能性降至最低。
+
+## 条款29：为“异常安全”而努力是值得的
+
+“异常安全”有两个条件，当异常被抛出时，带有异常安全性的函数会：
++ 不泄漏任何资源。
++ 不允许数据败坏。
+
+有个一般性规则是这么说的：较少的代码就是较好的代码，因为出错机会比较少，而且一旦有所改变，被误解的机会也比较少。
+
+异常安全函数（Exception-safe functions）提供以下三个保证之一：
++ 基本承诺：如果异常被抛出，程序内的任何事物仍然保持在有效状态下。没有任何对象或数据结构会因此而败坏，所有对象都处于一种内部前后一致的状态（例如所有的class约束条件都继续获得满足）。
++ 强烈保证：如果异常被抛出，程序状态不改变。调用这样的函数需有这样的认知：如果函数成功，就是完全成功，如果函数失败，程序会回复到“调用函数之前”的状态。
++ 不抛掷（nothrow）保证：承诺绝不抛出异常，因为它们总是能够完成它们原先承诺的功能。
+
+一个一般化的设计策略很典型地会导致强烈保证，copy and swap：为你打算修改的对象（原件）做出一份副本，然后在那副本上做一切必要修改，如果有任何修改动作抛出异常，原对象仍保持未改变状态，待所有改变都成功后，再将修改过的那个副本和原对象在一个不抛出异常的操作中置换（swap）。
+
+当你撰写新代码或修改旧代码时，请仔细想想如何让它具备异常安全性。首先是“以对象管理资源”，那可阻止资源泄漏；然后是挑选三个“异常安全保证”中的某一个实施于你所写的每一个函数身上。
+
+请记住：
++ 异常安全函数（Exception-safe functions）即使发生异常也不会泄露资源或允许任何数据结构败坏。这样的函数区分为三种可能的保证：基本型、强烈型、不抛异常型。
++ “强烈保证”往往能够以copy-and-swap实现出来，但“强烈保证”并非对所有函数都可实现或具备现实意义。
++ 函数提供的“异常安全保证”通常最高只等于其所调用之各个函数的“异常安全保证”中的最弱者。
+
+## 条款30：透彻了解inlining的里里外外
+
+inline函数背后的整体观念是，将“对此函数的每一个调用”都一函数本体替换之。
+
+inline只是对编译器的一个申请，不是强制命令。这项申请可以隐喻提出，隐喻方式是将函数定义于class定义式内：
+
+```cpp
+class Person {
+ public:
+  ...
+  // 一个隐喻的inline申请
+  int age() const {return theAge;}
+  ...
+};
+```
+
+请记住：
++ 将大多数inline限制在小型、被频繁调用的函数身上。这可使日后的调试过程和二进制升级（binary upgradability）更容易，也可使潜在的代码膨胀问题最小化，使程序的快速提升机会最大化。
++ 不要只因为function templates出现在头文件，就将它们声明为inline。
+
+## 条款31：将文件间的编译依存关系将至最低
+
++ 如果使用object references或object pointers可以完成任务，就不要使用object。
+    + 你可以只靠一个类型声明式就定义出指向该类型的references和pointers；但如果定义某类型的objects，就需要用到该类型的定义式。
++ 如果能够，尽量以class声明式替换class定义式。
+    + 当你声明一个函数而它用到某个class时，你并需要该class的定义；纵使函数以by value方式传递该类型的参数（或返回值）亦然。
++ 为声明式和定义式提供不同的头文件。
+
+通过Handle class封装实现细节：
+
+```cpp
+// Person.h
+
+class PersonImpl; // Person实现类的前置声明
+
+class Person {
+ public:
+  Person(const std::string& name, ...);
+  std::string name() const;
+  ...
+ private:
+  std::shared_ptr<PersonImpl> pImpl;
+};
+
+// Person.cpp
+#include "Person.h"
+#include "PersonImpl.h"
+
+Person::Person(const std::string& name, ...)
+  : pImpl(new PersonImpl(name, ...)) {}
+
+std::string Person::name() const {
+  return pImpl->name();
+}
+```
+
+通过Interface class封装实现细节：
+
+```cpp
+// Person.h
+
+class Person {
+ public:
+  virtual ~Person();
+  virtual std::string name() const = 0;
+  ...
+
+  // 工厂函数
+  static std::shared_ptr<Person>
+    create(const std::string name, ...);
+}
+
+// Person.cpp
+#include "Person.h"
+#include "RealPerson.h"
+// class RealPerson : public Person
+
+Person::~Person(){}
+
+std::shared_ptr<Person> Person::create(const std::string& name, ...) {
+  return std::shared_ptr<Person>(new RealPerson(name, ...));
+}
+```
+
+Handle class和Interface class解除了接口和实现之间的耦合关系，从而降低文件间的编译依存关系（compilation dependencies）。
+
+请记住：
++ 支持“编译依存性最小化”的一般构想是：相依于声明式，不要相依于定义式。基于此构想的两个手段是Handle class和Interface class。
++ 程序库头文件应该以“完全且仅有声明式”（full and declaration-only forms）的形式存在。这种做法不论是否涉及templates都适用。
+
+## 条款32：确定你的public继承塑模出is-a关系
+
+> + public继承 意味 is-a
+> + virtual函数 意味 接口必须被继承
+> + non-virual函数意味 接口和实现都必须被继承
+
