@@ -509,7 +509,7 @@ process(pw, priority());
 + 切记将成员变量声明为private。这可赋予客户访问数据的一致性、可细微划分访问控制、允许约束条件获得保证，并提供class作者以充分的实现弹性。
 + protected并不比public更具封装行。
 
-## 条款 23：宁以non-member、non-friend替换member函数
+## 条款23：宁以non-member、non-friend替换member函数
 
 愈多东西被封装，我们改变那些东西的能力也就愈大。这就是我们首先推崇封装的原因：它使我们能够改变事物而只影响有限的客户。
 
@@ -1020,3 +1020,4 @@ class GameCharacter {
 + 将机能从成员函数移到class外部函数，带来的一个缺点是：非成员函数无法访问class的non-public成员。
 + `std::function`对象的行为就像一般函数指针。这样的对象可接纳“与给定之目标签名式（target signature）兼容”的所有可调用物（callable entity）。
 
+## 
