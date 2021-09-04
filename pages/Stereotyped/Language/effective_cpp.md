@@ -830,3 +830,193 @@ Handle class和Interface class解除了接口和实现之间的耦合关系，�
 > + virtual函数 意味 接口必须被继承
 > + non-virual函数意味 接口和实现都必须被继承
 
+如果你令class D（Derived）以public形式继承class B（Base），你便是告诉C++编译器说，每一个类型为D的对象 同时也是一个类型为B的对象，反之不成立。你的意思是 B比D表现出更一般化的概念，而D比B表现出更特殊化的概念。你主张“B对象可派上用场的任何地方，D对象一样可以派上用场”（此即所谓 Liskov Substitution Principle），因为每一个D对象都是一种（是一个）B对象。反之如果你需要一个D对象，B对象无法效劳，因为虽然每个D对象都是一个B对象，反之并不成立。
+
+> 另外两个class之间的关系是has-a（有一个）和is-implemented-in-terms-of（根据某物实现出）。
+
+请记住：
++ “public继承”意味is-a，适用于base class身上的每一件事情一定也适用于devived class身上，因为每一个devied class对象也都是一个base class对象。
+
+## 条款33：避免遮掩继承而来的名称
+
+当位于一个derived class成员函数内指涉（refer to）base class的某物（也许是个成员函数、typedef、或成员变量）时，编译器可以找出我们所指涉的东西，因为derived class继承了声明于base class内的所有东西。实际运作方式是，derived class作用域被嵌套在base class作用域内。
+
+请记住：
++ derived class内的名称会遮掩base class内的名称。在public继承下从来没有人希望如此。
+    + public继承表示is-a，不应该屏蔽函数base class的名字
++ 为了让被遮掩的名字重见天日，可使用using声明式（using Base类名::名字）
+
+## 条款34：区分接口继承和实现继承
+
+public继承概念，由两部分组成：函数接口（function interface）继承和函数实现（function implementations）继承。
+
++ 成员函数的接口总是会被继承。
++ 声明一个pure virtual函数的目的是为了让derived class只继承函数接口。
++ 声明简朴的（非纯）impure virtual函数的目的，是让derived class继承该函数的接口和缺省实现。
++ 声明non-virtual函数的目的是为了令derived class继承函数的接口及一份强制性实现。
+
+请记住：
++ 接口继承和实现继承不同。在public继承之下，derived class总是继承base class的接口。
++ pure virutal函数只具体指定接口继承。
++ 简朴的（非纯）impure virtual函数具体指定接口继承及缺省实现继承。
++ non-virtual函数具指定定接口继承以及强制性实现继承。
+
+## 条款35：考虑virtual函数意外的其他选择
+
+假设一个游戏任务类：
+
+```cpp
+class GameCharacter {
+ public:
+  virtual int healthValue() const;
+  ...
+};
+```
+
+**藉由Non-Virtual Interface手法实现Template Method模式**：该流量建议，较好的设计是保留healthValue为public成员函数，但是让它称为non-virtual，并调用一个private virtual函数进行实际工作：
+
+```cpp
+class GameCharacter {
+ public:
+  int healthValue() const {
+    ... // 可以用于处理各种事前工作
+    int retVal = doHealthValue();
+    ... // 可以用于处理各种事后工作
+    return retVal;
+  }
+  ...
+ private:
+  // derived class可重新定义它
+  // 缺省算法，计算健康指数
+  virtual int do doHealthValue() const {
+    ...
+  }
+};
+```
+
+这一基本设计，也就是“令客户通过public non-virtual成员函数间接调用private virtual函数”，称为non-virtual interface（NVI）手法。它是所谓**Template Method**设计模式（与C++ template并无关联）的一个独特表现形式。这个non-virtual函数称为virtual函数的wrapper。
+
+**藉由Function Pointers实现Strategy模式**：主张“人物健康指数的计算与人物类型无关”。例如我们可能会要求每个人物的构造函数接受一个指针，指向一个健康计算函数，而我们可以调用该函数进行实际计算：
+
+```cpp
+class GameCharacter; // 前置声明
+int defaultHealthCalc(const GameCharacter& gc);
+
+class GameCharacter {
+ public:
+  typedef int (*HealthCalcFunc)(const GameCharacter&);
+  explicit GameCharacter(HealthCalcFunc hcf = defaultHealthCalc)
+    : healthFunc(hcf) {}
+  int healthValue() const {
+    return healthFunc(*this);
+  }
+  ...
+ private:
+  HealthCalcFunc hcf;
+};
+```
+
+这种做法提供了某些弹性：
+
++ 同一人物类型之不同实体可以有不同的健康计算函数。
++ 某已知人物之健康指数计算函数可在运行期间变更。
+
+**藉由std::function完成Strategy模式**：
+
+```cpp
+class GameCharacter; // 前置声明
+int defaultHealthCalc(const GameCharacter& gc);
+
+class GameCharacter {
+ public:
+  typedef std::function<int (const GameCharacter&)> HealthCalcFunc;
+  explicit GameCharacter(HealthCalcFunc hcf = defaultHealthCalc)
+    : healthFunc(hcf) {}
+  int healthValue() const {
+    return healthFunc(*this);
+  }
+  ...
+ private:
+  HealthCalcFunc hcf;
+};
+```
+
+和前一个设计比较，这个设计几乎相同。唯一不同的是如今GameCharacter持有一个`std::function`对象，相当于一个指向函数的范化指针。能有更惊人的弹性：
+
+```cpp
+short calcHealth(const GameCharacter&); // 注意返回类型为non-int
+
+struct HealthCalculator { // 函数对象
+  int operator()(const GameCharacter&) const {
+    ...
+  }
+}
+
+class GameLevel {
+ public：
+  // 成员函数；注意返回类型为non-int
+  float health()(const GameCharacter&) const;
+  ...
+};
+
+class EviBadGuy: public GameCharacter {
+ ... // 人物模型
+};
+class EyeCandyCharacter: public GameCharacter {
+ ... // 人物模型
+};
+
+// 使用某个 函数 计算健康指数
+EviBadGuy ebg1(calcHealth);
+// 使用某个 函数对象 计算健康指数
+EyeCandyCharacter ecc1(HealthCalculator());
+
+GameLevel currentLevel;
+...
+// 使用某个 成员函数 计算健康指数
+EviBadGuy ebg2(std::bind(
+    &GameLevel::health, currentLevel, _1
+));
+```
+
+`GameLevel::health`在被调时需要两个参数，隐式的GameLevel和一个GameCharacter，上述`std::bind`可以把一个GameLevel对象绑定在`GameLevel::health`的第一个参数上，以后再调用时就只需要一个GameCharacter，如此就满足了GameCharacter初始化参数的要求。
+
+**古典的Strategy模式**：
+
+```cpp
+class GameCharacter; // 前置声明
+class HealthCalcFunc {
+ // 可以有很多Derived class
+ public:
+  ...
+  virtual int calc(const GameCharacter& gc) const {
+    ...
+  }
+  ...
+};
+
+HealthCalcFunc defaultHealthCalc;
+class GameCharacter {
+ // 可以有很多Derived class
+ public:
+  explicit GameCharacter(HealthCalcFunc* phcf = &defaultHealthCalc)
+    : pHealthCalc(phcf) {}
+  int healthValue() const {
+    return pHealthCalc->calc(*this);
+  }
+ private:
+  HealthCalcFunc* pHealthCalc;
+};
+```
+
+摘要：
++ 使用non-virtual interface（NVI）手法，那是**Template Method**设计模式的一种特殊形式。它以public non-virutal成员函数包裹降低访问性（private或protected）的virtual函数。
++ 将virtual函数替换为“函数指针成员变量”，这是**Strategy设计模式**的一种分解表现形式。
++ 以`std::function`成员变量替换virtual函数，因而允许使用任何可调用物（callable entity）搭配一个兼容于需求的签名式。这也是Strategy设计模式的某种形式。
++ 将继承体系内的virtual函数替换为另一个继承体系内的virtual函数。这是Strategy设计模式的传统实现手法。
+
+请记住：
++ virtual函数的替代方案包括NVI手法及Strategy设计模式的多种形式。NVI手法自身是一个特殊形式的Template Method设计模式。
++ 将机能从成员函数移到class外部函数，带来的一个缺点是：非成员函数无法访问class的non-public成员。
++ `std::function`对象的行为就像一般函数指针。这样的对象可接纳“与给定之目标签名式（target signature）兼容”的所有可调用物（callable entity）。
+
