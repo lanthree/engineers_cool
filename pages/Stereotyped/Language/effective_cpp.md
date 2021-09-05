@@ -1211,3 +1211,381 @@ class IOFile : public InputFile, public OutputFile {
 + virtual继承会增加大小、速度、初始化（及赋值）复杂度等等成本。如果virutal base class不带任何数据，将是最具实用价值的情况。
 + 多重继承的确有正当用途。其中一个情结涉及“public继承某个Interface class”和“private继承某个协助实现的class”的两相组合。
 
+## 条款41：了解隐式接口和编译期多态
+
+面向对象变成世界总是以显式接口（explicit interface）和运行期多态（runtime polymorphism）决绝问题。
+
+Template及泛型编程的世界，与面向对象有根本上的不同。在此世界中显式接口和运行期多态仍然存在，但重要性降低。反倒是隐式接口（implicit interface）和编译期多态（compile-time polymorphism）移到前头了。
+
+通常显式接口由函数的签名式（也就是函数名称、参数类型、返回类型）构成。例如：
+
+```cpp
+class Widget {
+ public:
+  Widget();
+  virtual ~Widget();
+  virtual std::size_t size() const;
+  virtual void normalize();
+  void swap(Widget& other);
+};
+```
+
+隐式接口就完全不同了，它并不基于函数签名式，而是由有效表达式（valid expression）组成：
+
+```cpp
+template<typename T>
+void doProcessing(T& w) {
+  if (w.size() > 10 && w != someNastyWidget) {
+    ...
+  }
+  ...
+}
+```
+
+T的隐式接口看起来好像有这些约束：
++ 它必须提供一个名为size的成员函数，该函数返回一个整数。
+    + 或者size函数返回类型支持 `operator>(int)`
++ 它必须支持一个`operator!=`函数，用来比较两个T对象。
+    + 或者T的隐式转换类型支持`operator!=(someNastyWidget的类型)`
+
+加诸于template参数身上的隐式接口，就像加诸于class对象身上的显式接口一样真实，而且两者都在编译期完成检查。就像你无法以一种“与class提供之显式接口矛盾”的方式使用对象（代码将编译不过），你也无法在template中使用“不支持template所要求之隐式接口”的对象（代码一样编译不过）。
+
+请记住：
++ class和template都支持接口（interface）和多态（polymorphism）。
++ 对class而言，接口是显式的（explicit），以函数签名为中心。多态则是通过virtual函数发生于运行期。
++ 对template参数而言，接口是隐式的（implicit），奠基于有效表达式。多态则是通过template具现化和函数重载解析（function overloading resolution）发生于编译期。
+
+## 条款42：了解typename的双重意义
+
+声明template参数时，不论是用关键字class或typename意义完全相同。另外，任何时候当你想要在template中指涉一个嵌套从属类型名称，就必须在紧邻它的前一个位置放上关键字typename：
+
+```cpp
+template<typename C>       // typename也可是class
+void f(const C& container, // 不允许使用typename
+       typename C::iterator iter) {    // 嵌套从属类型，一定要会用typename
+  if (container.size() >= 2) {
+    // 一定要typename
+    typename C::const_iterator *pIter; // 嵌套从属类型，一定要会用typename
+    int val = *(container.begin());
+    ...
+  }
+}
+```
+
+> template内出现的名称如果想依于template参数，称之为从属名称（dependent names）。如果从属名称在class内呈嵌套状，我们称它为嵌套从属名称（nested dependent name）。`C::const_iterator`就是这样一个名称。实际上它还是嵌套从属类型名称（nested dependent type name）。
+> template内的不依赖于template参数的名称，称为非从属名称（non-dependent name）。
+
+但有例外，typename不可以出现在base classes list内的嵌套从属类型名称前，也不可在member intialization list中作为base clas修饰符：
+
+```cpp
+template<typename T>
+class Derived : public Base<T>::Nested { //base class list
+ public:
+  explicit Derived(int x)
+   : Base<T>::Nested(x) { // mem init list
+    typename Base<T>::Nested temp;
+    ...
+  }
+};
+```
+
+请记住：
++ 声明template参数时，前缀关键字class和typename可互换。
++ 请使用关键字typename标识嵌套从属类型名称；但不得在base class list或member intialization list内以它作为base class修饰符。
+
+## 条款43：学习处理模版化基类内的名称
+
+请记住：
++ 可在derived class template内通过“this->”指涉base class templatete内的成员名称，或藉由一个明白写出的“base class资格修饰符”完成。
+
+## 条款44：将与参数无关的代码抽离template
+
+请记住：
++ template生成多个class和多个函数，所以任何template代码都不该与某个造成膨胀的template参数产生相依关系。
++ 因非类型模板参数（non-type template parameter）而造成的代码膨胀，往往可消除，做法是以函数参数或class成员变量替换template参数。
++ 因类型参数（type parameter）而造成的代码膨胀，往往可降低，做法是让带有完全相同二进制表述（binary representation）的具现类型（instantiation type）共享实现代码。
+
+## 条款45：运用成员函数模板接受所有兼容类型
+
+假设有如下继承关系：
+
+```cpp
+class Top {...};
+class Middle : public Top {...};
+class Bottom : public Middle {...};
+```
+
+使用原始指针可以很方便的做隐式转换：
+
+```cpp
+Top* pt1 = new Middle();
+Top* pt2 = new Bottom();
+```
+
+如果你自己实现一个只能指针类，那么不太能直接完成隐式转换：
+
+```cpp
+template<typename T>
+class SmartPtr {
+ public:
+  explicit SmartPtr(T* realPTr);
+  ...
+};
+
+SmartPtr<Top> pt1 =                //编译不过
+  SmartPtr<Middle>(new Middle()); 
+```
+
+**Template和泛型编程（Generic Programming）**
+
+就上述情况而言，我们需要为SmartPtr写一个构造模版，这样的模版是所谓member function template（常简称为member template），其作用是为class生成函数：
+
+```cpp
+template<tyname T>
+class SmartPtr {
+ public:
+  template<typename U>  // 泛化（generalized）copy构造函数
+  SmartPtr(const SmartPtr<U>& other); // 没有explicit为了实现隐式转换
+};
+```
+
+这个泛化copy构造函数，还能提供根据`SmartPtr<Top>`创建`SmartPtr<Middle>`的转换，但这并不是我们想要的。我们可以如下实现转换限制：
+
+```cpp
+template<tyname T>
+class SmartPtr {
+ public:
+  template<typename U>
+  SmartPtr(const SmartPtr<U>& other)
+   : heldPtr(other.get()) {...} // 以other内的指针初始化heldPtr
+                                // C++可以自动完成转换检查
+  T* get() const {return heldPtr;}
+  ...
+ private:
+  T* heldPtr;
+};
+```
+
+请记住：
++ 请使用member function template（成员函数模版）生成“可接受所有兼容类型”的函数。
++ 如果你声明member template用于“泛化copy构造”或“泛化assignment操作”，你还是需要声明正常的copy构造函数和copy assignment操作符。
+
+## 条款46：需要类型转换时请为模版定义非成员函数
+
+扩充条款24的例子，将Rational和`operator*`模版化：
+
+```cpp
+template<typename T>
+class Rational {
+ public:
+  Rational(const T& numerator = 0,
+           const T& demoninator = 1);
+  const T numerator() const;
+  const T demoninator() const;
+  ...
+};
+
+template<T> // 为了实现混合运算，以non-member实现
+const Rational<T> operator* (const Rational<T>& lhs,
+                             const Rational<T>& rhs) {
+  ...
+}
+```
+
+但是，因为template实参推导过程中并不考虑采纳“通过构造函数而发生的”隐式类型转换，如下代码无法通过编译：
+
+```cpp
+Rational<int> oneHalf(1,2);
+Rational<int> result = oneHalf * 2; // 编译不过
+```
+
+可以通过在class template内声明该function template为友元来完成该函数的推导：
+
+```cpp
+template<typename T>
+class Rational {
+ public:
+  ...
+  // 声明operator*函数
+  // 在class Rational被具现化时，就会具现化出operator*的声明
+  friend
+  const Rational operator* (const Rational& lhs,
+                            const Rational& rhs);
+};
+
+template<T> // 定义operator*函数
+const Rational<T> operator* (const Rational<T>& lhs,
+                             const Rational<T>& rhs) {
+  ...
+}
+```
+
+但此时，无法连接，因为“定义operator*函数”的地方，还是无法正确完成推导。此时，我们可以把其定义与声明放在一起：
+
+```cpp
+template<typename T>
+class Rational {
+ public:
+  ...
+  friend
+  const Rational operator* (const Rational& lhs,
+                            const Rational& rhs) {
+    return Rational(lhs.numerator()* rhs.numerator(), ...);
+  }
+};
+```
+
+为了让类型转换可能发生于所有实参身上，我们需要一个non-member函数；为了令这个函数自动具现换，我们需要将它声明在class内部；而在class内部声明non-member函数的唯一办法就是：令它成为一个friend。
+
+请记住：
++ 当我们编写一个class template，而它所提供之“于此template相关的”函数支持“所有参数之隐式类型转换”时，请将那些函数定义为“class template内部的friend函数”。
+
+## 条款47：请使用traits class表现类型信息
+
+STL共有5种迭代器分类，对应于它们支持的操作：
++ Input迭代器：只能向前移动，一次一步，只可读取。例如，`istream_iterators`。
++ Output迭代器：只能向前移动，一次一步，只可涂写。例如，`ostream_iterators`。
++ Forward迭代器：可以做前述两种分类所能做的每一件事，而且可以读或者写其所指物一次以上。例如，单向linked list的迭代器。
++ Bidirectional迭代器：可以双向移动。例如，STL的set、map、list等迭代器。
++ Random Access迭代器：可执行“迭代器算数”，在常量时间内向前或向后跳跃任意距离。例如，STL中vector、deque、string的迭代器。
+
+对于这5中分类，C++标准程序库分别提供专属的卷标结构（tag struct）加以确认：
+
+```cpp
+struct input_iterator_tag {};
+struct output_iterator_tag {};
+struct forward_iterator_tag : public input_iterator_tag {};
+struct bidirectional_iterator_tag : public forward_iterator_tag {};
+struct random_access_iterator_tag : public bidirectional_iterator_tag {};
+```
+
+假设要实现一个名为advance的函数，用来将某个迭代器移动某个给定距离：
+
+```cpp
+template<typename IterT, typename DistT>
+void advance(IterT& iter, DistT d); // 如果d<0 则向后移动
+```
+
+因为不同迭代器分类有不同的移动能力，advance的实现最好根据分类加以区分，例如：
+
+```cpp
+template<typename IterT, typename DistT>
+void advance(IterT& iter, DistT d) {
+  if (iter is random access iterator) {
+    iter += d;
+  } else {
+    ... // 一步一步移
+  }
+}
+```
+
+为了取得类型的某些信息，可以使用traits技术：它们是一种技术，也是一个C++程序员共同遵守的协议。例如迭代器traits：
+
+```cpp
+template<typename IterT>
+struct iterator_traits;
+```
+`iterator_traits`的运作方式是，针对每一个类型IterT，在`struct iterator_traits<IterT>`内一定声明某个typedef为`iterator_category`，用来确认IterT的迭代器分类。
+
+首先，它要求“用户自定义的迭代器类型”必须嵌套一个typedef：
+
+```cpp
+template<...>
+class deque {
+ public:
+  class iterator {
+   public:
+    typedef random_access_iterator_tag iterator_category;
+    ...
+  };
+  ...
+};
+
+template<...>
+class list {
+ public:
+  class iterator {
+   public:
+    typedef bidirectional_iterator_tag iterator_category;
+    ...
+  }
+  ...
+};
+```
+
+而`iterator_traits`只需：
+
+```cpp
+template<typename IterT>
+struct iterator_traits {
+ typedef typename IterT::iterator_category iterator_category;
+};
+```
+
+然后对于内置类型——指针，特别提供一个偏特化版本（partial template specialization）：
+
+```cpp
+template<typename IterT>
+struct iterator_traits<IterT*> {
+ typedef random_access_iterator_tag iterator_category;
+};
+```
+
+现在，就可以对迭代器获取分类信息，然后操作：
+
+```cpp
+template<typename IterT, typename DistT>
+void advance(IterT& iter, DistT d) {
+  if (typeid(typename std::iterator_traits<IterT>::iterator_category)
+    == typeid(std::random_access_iterator_tag)) {
+    ... 
+  } else {
+    ...
+  }
+}
+```
+
+最后，可以通过重载，把运行期的if判断，提前至编译期：
+
+```cpp
+template<typename IterT, typename DistT>
+void doAdvance(IterT& iter, DistT d,
+             std::random_access_iterator_tag) {
+  ...
+}
+
+template<typename IterT, typename DistT>
+void doAdvance(IterT& iter, DistT d,
+             std::bidirectional_iterator_tag) {
+  ...
+}
+...
+
+template<typename IterT, typename DistT>
+void doAdvance(IterT& iter, DistT d) {
+  doAdvance(iter, d,
+    typename std::iterator_traits<IterT>::iterator_category);
+}
+```
+
+traits广泛用于标准程序库，其中上述讨论的`iterator_traits`除了供应`iterator_category`还供应另外四分迭代器相关信息（其中最常见的是`value_type`）。此外，还有`char_traits`用来保存字符类型的相关信息，以及`numeric_limits`用来保存数值类型的相关信息（例如最值），等等。
+
+请记住：
++ traits class使得“类型相关信息”在编译期可用。它们以template和“template特化”完成实现。
++ 整合重载技术（overloading）后，traits class有可能在编译期对类型执行`if...else`测试。
+
+## 条款48：认识template元编程
+
+## 条款49：了解new-handler的行为
+
+## 条款50：了解new和delete的合理替换时机
+
+## 条款51：编写new和delete时需固守常规
+
+## 条款52：写了placement new也要写placement delete
+
+## 条款53：不要轻忽编译器的告警
+
+## 条款54：让自己数据包括TR1在内的标准程序库
+
+## 条款55：让自己熟悉Boost
