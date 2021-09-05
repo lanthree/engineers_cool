@@ -1020,4 +1020,194 @@ class GameCharacter {
 + 将机能从成员函数移到class外部函数，带来的一个缺点是：非成员函数无法访问class的non-public成员。
 + `std::function`对象的行为就像一般函数指针。这样的对象可接纳“与给定之目标签名式（target signature）兼容”的所有可调用物（callable entity）。
 
-## 
+## 条款36：绝不重新定义继承而来的non-virtual函数
+
+请记住：
++ 绝对不要重新定义继承而来的non-virtual函数。
+
+## 条款37：绝不重新定义继承而来的缺省参数值
+
+virtual函数系动态绑定（dynamically bound），而缺省参数值却是静态绑定（statically bound）。动态绑定又名后期绑定，late binding；静态绑定又名前期绑定，early binding。
+
+考虑以下的class继承体系：
+
+```cpp
+class Shape {
+ public:
+  enum ShapeColor {Red, Green, Blue};
+  virtual void draw(ShapeColor color = Red) const = 0;
+  ...
+};
+
+class Rectangle : public Shape {
+ public:
+  // 注意，赋予不同的缺省参数值
+  virtual void draw(ShapeColor color = Green) const;
+  ...
+};
+class Circle : public Shape {
+ public:
+  // 去掉了缺省值，寓意需要一个参数
+  virtual void draw(ShapeColor color) const;
+};
+```
+
+考虑如下使用代码：
+
+```cpp
+Shape* pc = new Circle();    // pc的静态类型是Shape*，动态类型是Circle*
+Shape* pr = new Rectangle(); // pr的静态类型是Shape*，动态类型是Circle*
+
+pc->draw(); // 因为缺省参数是静态绑定，所以效果等同于 pc->draw(Shape::Red);
+pr->draw(); // 因为缺省参数是静态绑定，所以可以通过，虽然Circle::draw定义需要明确参数
+```
+
+上面调用时，函数体来自Derived类，缺省参数又来自Base类，很糟糕！
+
+但如果试着遵守这条规则，并且同时提供缺省参数值，那么会有代码重复 以及 相依性：
+
+```cpp
+class Shape {
+ public:
+  enum ShapeColor {Red, Green, Blue};
+  virtual void draw(ShapeColor color = Red) const = 0;
+  ...
+};
+
+class Rectangle : public Shape {
+ public:
+  virtual void draw(ShapeColor color = Red) const;
+  ...
+};
+```
+
+当你想令virtual函数表现出你所想要的行为但却遭遇麻烦，聪明的做法是考虑替代设计，例如NVI手法：
+
+```cpp
+class Shape {
+ public:
+  enum ShapeColor {Red, Green, Blue};
+  virtual void draw(ShapeColor color = Red) const {
+    doDraw(color);
+  }
+  ...
+ private:
+  virtual void doDraw(ShapeColor color) const = 0;
+};
+
+class Rectangle : public Shape {
+ public:
+  ...
+ private:
+  virtual void doDraw(ShapeColor color) const = 0;
+};
+```
+
+请记住：
++ 绝对不要重新定义一个继承而来的缺省参数值，因为缺省参数值都是静态绑定，而virtual函数——你唯一应该覆写的东西——却是动态绑定。
+
+## 条款38：通过复合塑模出has-a或“根据某物实现出”
+
+复合（composition，同义词，layering（分层），containment（内含），aggregation（聚合）和embedding（内嵌））是类型之间的一种关系，当某种类型的对象内含它种类型的对象，便是这种关系。例如：
+
+```cpp
+class Address {...};
+class PhoneNumber {...};
+
+class Person {
+ public:
+  ...
+ private:
+  std::string name;        // 合成成分物（composed object）
+  Address address;         // 同上
+  PhoneNumber voiceNumber; // 同上
+  PhoneNumber faxNumber;   // 同上
+};
+```
+
+复合意味has-a（有一个）或is-implemented-in-terms-of（根据某物实现出）。
+
+请记住：
++ 复合（composition）的意义和public继承完全不同。
++ 在应用域（application domain），复合意味has-a（有一个）。在实现域（implementation domain），复合意味is-implemented-in-terms-of（根据某物实现出）。
+
+## 条款39：明智而审慎地使用private继承
+
+和public继承不同：如果class之间的继承关系是private，编译器不会自动将一个derived class对象转换为一个base class对象。由private base class继承而来的所有成员，在derived class中都会变成private 属性。
+
+private继承意味 implemented-in-terms-of（根据某物实现出）。private继承纯粹只是一种实现技术。private继承纯的含义与复合一样，在实现上，尽可能使用复合，必要时（当protected成员 或 virtual函数牵扯进来时）才使用private继承。
+
+```cpp
+class Timer {
+ public:
+  explicit Timer(int tickFrequency);
+  // 定时器每滴答一次，此函数就被自动调用一次
+  virtual void onTick() const;
+  ...
+};
+
+class Widget : private Timer {
+ private:
+  // 利用定时器做一些事情
+  virtual void onTick() const;
+};
+```
+
+但是可以以复合（composition）替代：
+
+```cpp
+class Widget {
+ private:
+  class WidgetTimer : public Timer {
+   public:
+    virtual void onTick() const;
+    ...
+  };
+  WidgetTimer timer;
+  ...
+};
+```
+
+此方案同时还可以防止derived class重新定义onTick。
+
+当你面对“并不存在is-a关系”的两个class，其中一个需要访问另一个的protected成员，或需要重新定义其一或多个virtual函数，private继承极有可能成为正统设计策略。一个混合了public继承和复合的设计，往往能够释出你要的行为，尽管这样的设计有较大的复杂度。“明智而审慎地使用private继承”意味，在考虑过所有其他方案之后，如果仍然认为private继承是“表现程序内两个class之间的关系”的最佳办法，这才用它。
+
+请记住：
++ private继承意味is-implemented-in-terms-of（根据某物实现出）。它通常比复合（composition）的级别低。但是当derived class需要访问protected base class的成员，或需要重新定义继承而来的virtual函数时，这么设计是合理的。
++ 和复合（composition）不同，private继承可以造成empty base最优化。这对致力于“对象尺寸最小化”的程序库开发者而言，可能很重要。
+
+## 条款40：明智而审慎地使用多重继承
+
+一旦涉及多重继承（multiple inheritance；MI），C++社群便分为两个基本阵营。其一认为如果单一继承（single inheritance；SI）是好的，多重继承一定更好；另一派阵营则主张，单一继承是好的，但多重继承不值得拥有（或使用）。
+
+当MI进入设计景框，程序有可能从一个以上的base class继承相同的名称（如函数、typedef等等）。那会导致较多的歧义（ambiguity）机会。
+
+多重继承的意思是继承一个以上的base class，但这些base class并不常在继承体系中又有更高级的base class，因为那些会导致要命的“钻石型多重继承”：
+
+```cpp
+class File {...};
+class InputFile : public File {...};
+class OutputFile : public File {...};
+class IOFile : public InputFile, public OutputFile {
+ ...
+};
+```
+
+如果File终有一个fileName成员变量，默认情况下，IOFile经`File->InputFile->IOFile`、`File->OutputFile->IOFile`两条继承链路会分别继承一个fileName；如果那不是你要的，你必须令那个带有此数据的class成为一个virtual base class：
+
+```cpp
+class File {...};
+class InputFile : virtual public File {...};
+class OutputFile : virtual public File {...};
+class IOFile : public InputFile, public OutputFile {
+ ...
+};
+```
+
+对virtual base class的忠告：第一，非必要不要使用virtual class，平常使用non-virtual继承；第二，如果你必须使用virtual base class，尽可能避免在其中放置数据。
+
+请记住：
++ 多重继承比单一继承复杂。他可能导致新的歧义性，以及对virtual继承的需要。
++ virtual继承会增加大小、速度、初始化（及赋值）复杂度等等成本。如果virutal base class不带任何数据，将是最具实用价值的情况。
++ 多重继承的确有正当用途。其中一个情结涉及“public继承某个Interface class”和“private继承某个协助实现的class”的两相组合。
+
