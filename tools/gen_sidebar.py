@@ -22,7 +22,7 @@ class Node:
             # print("add pages: ", pages, self.path_)
             self.pages_ = pages
             return
-        
+
         if not s_p[idx] in self.internal_children_.keys():
             self.internal_children_[s_p[idx]] = Node(s_p[idx])
             # print("add node: ", s_p[idx], self.internal_children_[s_p[idx]]);
@@ -100,6 +100,9 @@ def get_filelist(scan_dir):
             if not filename.endswith(".md"):
                 continue
 
+            if filename.startswith("wip_"):
+                continue
+
             if filename in ignore_files:
                 continue
 
@@ -122,4 +125,4 @@ def get_filelist(scan_dir):
 if __name__ == "__main__":
     get_filelist(os.getenv('WORKSPACE'))
     output_to_file();
-    
+
