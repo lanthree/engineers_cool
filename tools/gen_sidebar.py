@@ -125,6 +125,10 @@ def get_filelist(scan_dir):
         output_sidebars(scan_dir, home, sidebars)
 
 if __name__ == "__main__":
-    get_filelist(os.getenv('WORKSPACE'))
+    workspace = os.getenv('WORKSPACE')
+    if workspace is None:
+        workspace = os.getcwd()
+
+    get_filelist(workspace)
     output_to_file();
 
