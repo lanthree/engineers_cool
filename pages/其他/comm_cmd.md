@@ -54,6 +54,12 @@
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
 ```
 
+## git 中文路径乱码
+
+```
+git config core.quotepath false
+```
+
 ## tig
 
 ```sh
