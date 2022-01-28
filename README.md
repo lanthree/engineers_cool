@@ -7,12 +7,12 @@
 + [DONE] LeetCode 序号前100的 简单、中等难度题目 **重点准备**
     + [ING] 倒刷[高频算法题](https://zhuanlan.zhihu.com/p/386929820)
 + [ING] 分布式系统 **重点准备**
-    + [ING] [MIT 6.824](https://pdos.csail.mit.edu/6.824/schedule.html)
-        + 进度 LEC6/LEC21, lab2 1/4
     + [ING] 分布式论文
         + [Google三宝 - MapReduce](https://engineers.cool/#/pages/Distributed-System/Papers/MapReduce)
         + [Google三宝 - GFS](https://engineers.cool/#/pages/Distributed-System/Papers/GFS)
         + [Raft](https://engineers.cool/#/pages/Distributed-System/Papers/Raft)
+    + [ING] DDIA
+    + [PAUSE] [MIT 6.824](https://pdos.csail.mit.edu/6.824/schedule.html)
     + [CAP](https://engineers.cool/#/pages/Distributed-System/CAP)
     + [TODO] 一致性协议：Paxos Raft gossip
     + [TODO] 分布式锁
