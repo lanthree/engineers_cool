@@ -15,3 +15,8 @@
 
 - [各种数据结构的实现](https://xlinux.nist.gov/dads/)
 - [brilliant 数据结构](https://brilliant.org/computer-science/)
+
+## 开发环境
+
+- [oh-my-zsh的几个常用插件](https://www.zrahh.com/archives/167.html)
+- [The Ultimate vimrc](https://github.com/amix/vimrc)
